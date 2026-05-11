@@ -24,8 +24,9 @@ For full reference (every command, every flag, every exit code), see
 6. **Image is sync, video and audio are async.** Image runs typically finish in ~5–10s — `vsb run image/...` blocks fine. Video/audio can take 30s–3min — use `--async`, then poll with `vsb status <job_id> --result --download <template>`.
 7. **Estimate cost first.** `vsb pricing <category>/<slug> --json` returns `user_cost_estimate`. Show it to the user before running expensive video models.
 8. **Auth.** Run `vsb setup` once — opens a browser to issue an API key, writes it to `~/.vsb/config.json`. Or set `VSB_API_KEY` in the env / `.env`. `vsb pricing` and most write endpoints require auth.
-9. **Every `vsb run` auto-attaches to the user's live sandbox.** Each completed generation becomes a draggable node on `https://visualsandbox.com/sandbox/`. To opt out for a one-off script, pass `--no-sandbox`. To target a non-default sandbox, pass `--sandbox-uuid <uuid>`.
+9. **Every `vsb run` auto-attaches to the user's live sandbox.** Each completed generation becomes a draggable node on `https://visualsandbox.com/sandbox/`. To opt out for a one-off script, pass `--no-sandbox`. To target a non-default sandbox, pass `--sandbox-uuid <uuid>`. Runs with `n>1` (currently `image/gpt-image-2`) drop **one node per output image**; each gets its own `output_index` (0..N-1) so every variant is reachable on the canvas.
 10. **Selection-aware prompts.** When the user's request references "this", "him", "the image", "selected", "that one" — or anything that implies a subject already on screen — call `vsb sandbox selection --json` first. Returns the node(s) the user has selected on the canvas: prompt, model, output URL. Pass the `output_url` as the input image to the next `vsb run` (e.g. `--image_urls "[\"<url>\"]"` for nano-banana). If selection is empty, ask the user to click a node before continuing.
+11. **Canvas survey vs drill-in.** Use `vsb sandbox nodes --json --limit N` for a slim overview of the whole canvas (~360 B/node — newest first, just uuid + slug + url + position). When you've picked a target, `vsb sandbox node <uuid> --json` returns full detail (prompt + all output URLs + media_asset). This two-step keeps context cheap even on a 20+ node sandbox.
 
 ## Command index
 
@@ -40,6 +41,8 @@ For full reference (every command, every flag, every exit code), see
 | `vsb upload <path-or-url>` | Upload local file or remote URL to VS CDN |
 | `vsb presets <list|get|run|create|delete>` | Manage saved model+inputs presets |
 | `vsb sandbox selection` | Read what the user has selected on the canvas (prompt, model, image URL) |
+| `vsb sandbox nodes` | List every node on the active sandbox (slim by default, `--full` for raw, `--limit N` to cap, `--kind generation\|upload` to filter) |
+| `vsb sandbox node <uuid>` | Full detail for one node — prompt, all output URLs, media_asset, position |
 | `vsb skills <list|install|update|remove>` | Manage agent skill packs in `.claude/skills/` |
 | `vsb init` | One-shot install of the default skill bundle |
 
@@ -119,7 +122,25 @@ vsb run image/nano-banana \
 vsb status "$JOB" --cancel --json
 ```
 
-### 6. Act on the user's canvas selection
+### 6. Survey the canvas (when nothing's selected)
+
+When the user references the canvas in general ("what's on my board", "redo the third one", "the kitchen photo from earlier") rather than a specific selection, list nodes first:
+
+```bash
+vsb sandbox nodes --json --limit 10
+# → {"sandbox_uuid":"...","total":22,"nodes":[{"uuid":"...","slug":"image/gpt-image-2","output_index":1,"url":"...","pos":[-289,1937]}, ...]}
+```
+
+Slim shape is ~360 B/node so 20+ nodes still fit in a few KB. Pick a uuid by the slug or thumbnail URL, then drill in:
+
+```bash
+vsb sandbox node <uuid> --json
+# → full prompt + all output_urls + media_asset
+```
+
+Use this pair before falling back to "ask the user to select a node". For n>1 runs, each output_index is a separate node — list them and pick.
+
+### 7. Act on the user's canvas selection
 
 When the user says "make him purple", "remove the background", "stylize this" — they're pointing at a node already on the canvas. Read the selection first, then chain it into the next run:
 
@@ -136,7 +157,7 @@ vsb run image/nano-banana \
 
 Pull the original prompt out of the selection (`.nodes[0].generation.prompt`) when you want to refine vs replace ("same scene, but at night"). The result lands back on the canvas next to the original.
 
-### 7. Recover the result URLs of a past job
+### 8. Recover the result URLs of a past job
 
 If you forgot to capture the output URLs (or the JSON got truncated by a shell
 pipe), refetch them by job id:
