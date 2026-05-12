@@ -14,6 +14,16 @@ Image runs are sync — `vsb run image/<slug>` blocks until done (typically
 5–10s). No `--async` needed. Pipe `--json` and `--download "<template>"` to
 capture results.
 
+> **Before writing any image prompt, read
+> [`image-prompting`](../image-prompting/SKILL.md).** It covers the universal
+> rules, the prompt-anatomy slot list, the reference-image keep/ignore
+> pattern (what to take from an attached image and what to ignore — without
+> this, watermarks and text overlays leak into outputs), and the camera /
+> lens / lighting / grade vocabulary banks. This skill only covers
+> *picking* a model — the prompt-craft itself lives in `image-prompting`,
+> with model-specific quirks in [`nano-banana`](../nano-banana/SKILL.md) and
+> [`ugc-people`](../ugc-people/SKILL.md).
+
 ## Picking a model
 
 Verify the live catalog with `vsb models --modality image --json | jq '.models[] | {slug, category, owner}'`.
@@ -52,12 +62,17 @@ URL1=$(vsb upload ./photo.jpg --json | jq -r '.url')
 URL2=$(vsb upload ./reference.jpg --json | jq -r '.url')
 
 vsb run image/nano-banana \
-  --prompt "place the cat from image 1 onto the windowsill from image 2, match lighting" \
+  --prompt "Use Image A (cat photo) as the IDENTITY source — keep the cat's fur pattern, eye color, and proportions exactly. Use Image B (windowsill photo) as the BACKGROUND source — match the location and ambient light, but ignore any other subjects in it. Render: the cat from Image A curled up on the windowsill from Image B, matching the windowsill's ambient lighting. No logos, no captions, no watermarks." \
   --image_input "[\"$URL1\",\"$URL2\"]" \
   --aspect_ratio match_input_image \
   --download "./out/" \
   --json
 ```
+
+Naming each reference (`Image A`, `Image B`) and giving it a role
+(`IDENTITY source`, `BACKGROUND source`) is the universal multi-ref rule —
+see [`image-prompting`](../image-prompting/SKILL.md) §Multi-reference for
+the full template.
 
 Pass JSON-array inputs as a literal — `parseValue` auto-coerces. The exact
 field name (e.g. `image_input`) is whatever `vsb schema image/nano-banana

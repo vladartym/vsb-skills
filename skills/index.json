@@ -18,19 +18,30 @@
       "files": [
         {
           "path": "SKILL.md",
-          "sha256": "a30722d4dc4332a41636b657f1452c4a6449cac3c1734d1ed849cbcaeefb512c",
-          "bytes": 5185
+          "sha256": "00b49b059a1cf6658a5df09fe5b8c6a4de8515a5a726af2d5d339cbe72b91d79",
+          "bytes": 6356
+        }
+      ]
+    },
+    {
+      "name": "image-prompting",
+      "description": "Canonical prompt-craft skill for every image model in Visual Sandbox (`image/nano-banana*`, `image/gpt-image-2`, `image/flux-2-klein-4b`, future slugs). Read before writing any `vsb run image/<slug>` prompt — text-to-image or edit-with-reference. Covers the universal rules, the prompt-anatomy slot list, the reference-image keep / ignore formula (what to take from the reference, what to ignore — watermarks, text overlays, original lighting, original background), and the \"enumerate models before picking cheapest\" rule. Model-specific quirks live in sibling skills (`nano-banana`, `ugc-people`).",
+      "files": [
+        {
+          "path": "SKILL.md",
+          "sha256": "ddfd523b8ee9236cb571fe79bebc831ed800393781b1f4aeb15ed419e3b7337a",
+          "bytes": 6781
         }
       ]
     },
     {
       "name": "nano-banana",
-      "description": "Prompt the Nano Banana family (Google's Gemini Image — `image/nano-banana`, `image/nano-banana-2`, `image/nano-banana-pro`) well. Trigger whenever the user is about to call `vsb run image/nano-banana*` or asks how to phrase a prompt for these models — covers prompt anatomy, edit-mode rules, text rendering, multi-reference blending, camera/lighting vocabulary, and the things this family gets wrong.",
+      "description": "Prompt the Nano Banana family (Google's Gemini Image — `image/nano-banana`, `image/nano-banana-2`, `image/nano-banana-pro`) well. Trigger whenever the user is about to call `vsb run image/nano-banana*` or asks how to phrase a prompt for these models — covers the variant picker, edit-mode rules, text rendering, multi-reference blending, and the things this family gets wrong. For the universal prompt-anatomy rules and reference-image subject-anchor pattern, read [`image-prompting`](../image-prompting/SKILL.md) first — this skill only adds nano-banana-specific quirks on top.",
       "files": [
         {
           "path": "SKILL.md",
-          "sha256": "7062484f892835633abd6ffbda5086e8259e895ec2d60839ff29c103430e6da8",
-          "bytes": 9730
+          "sha256": "04f569046dd195036ba1ab507e9f49c2964b61cf2f7b45a33faadb2b9ebf054c",
+          "bytes": 8514
         }
       ]
     },
@@ -42,33 +53,6 @@
           "path": "SKILL.md",
           "sha256": "a84fdf763ca87d151c0219b8f36f8ebf9fc61bfb1a838d4fdde5552ba816b767",
           "bytes": 5194
-        }
-      ]
-    },
-    {
-      "name": "video",
-      "description": "Generate or edit video with Visual Sandbox. Trigger when the user wants text-to-video, image-to-video, or motion-control video via the vsb CLI. Always uses async + status polling — video runs take 30s–3min. Verify slugs with `vsb models --modality video --json`.",
-      "files": [
-        {
-          "path": "SKILL.md",
-          "sha256": "761024ae0309e19f92de6a19da02c001376e8c1a53448f63cb1d4ef15c4c890e",
-          "bytes": 4440
-        }
-      ]
-    },
-    {
-      "name": "vsb",
-      "description": "Use the vsb CLI to generate AI media via Visual Sandbox — image, video, audio, 3D, vector. Trigger when the user mentions \"vsb\", \"Visual Sandbox CLI\", \"generate an image/video/audio\", \"run a model\", or asks to produce media via shell. Always pipe through --json when output will be parsed by an agent.",
-      "files": [
-        {
-          "path": "references/full-reference.md",
-          "sha256": "a41774279814115603de9e4a0635fe50abd609abdbd53b4cab9748b2a1212fbd",
-          "bytes": 8591
-        },
-        {
-          "path": "SKILL.md",
-          "sha256": "18bce3c57dbfc35432406c47603f6f7953792241ab80ae6abcd2e5cbef267dd2",
-          "bytes": 10083
         }
       ]
     },
@@ -95,6 +79,33 @@
           "path": "SKILL.md",
           "sha256": "8922b097bfe5f24e131dd290562091bb82281f68d97f198a476697fddaba95aa",
           "bytes": 8850
+        }
+      ]
+    },
+    {
+      "name": "video",
+      "description": "Generate or edit video with Visual Sandbox. Trigger when the user wants text-to-video, image-to-video, or motion-control video via the vsb CLI. Always uses async + status polling — video runs take 30s–3min. Verify slugs with `vsb models --modality video --json`.",
+      "files": [
+        {
+          "path": "SKILL.md",
+          "sha256": "761024ae0309e19f92de6a19da02c001376e8c1a53448f63cb1d4ef15c4c890e",
+          "bytes": 4440
+        }
+      ]
+    },
+    {
+      "name": "vsb",
+      "description": "Use the vsb CLI to generate AI media via Visual Sandbox — image, video, audio, 3D, vector. Trigger when the user mentions \"vsb\", \"Visual Sandbox CLI\", \"generate an image/video/audio\", \"run a model\", or asks to produce media via shell. Always pipe through --json when output will be parsed by an agent.",
+      "files": [
+        {
+          "path": "references/full-reference.md",
+          "sha256": "a41774279814115603de9e4a0635fe50abd609abdbd53b4cab9748b2a1212fbd",
+          "bytes": 8591
+        },
+        {
+          "path": "SKILL.md",
+          "sha256": "8aa8d6c1f93c3dc5977e1589a08fdf5d294acc461283a1a4724d36eaa5eb50d5",
+          "bytes": 11244
         }
       ]
     }
