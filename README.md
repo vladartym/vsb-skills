@@ -14,6 +14,8 @@ Each skill is a single `SKILL.md` (plus optional `references/`) with YAML frontm
 | [`audio`](skills/audio/) | Generate sound effects, ambient audio, speech |
 | [`presets`](skills/presets/) | Run, save, override, and share reproducible model configurations |
 | [`nano-banana`](skills/nano-banana/) | Prompt the Nano Banana family well — edit-mode rules, text rendering, multi-reference blending |
+| [`image-prompting`](skills/image-prompting/) | Canonical prompt-craft trunk for every image model — anatomy, reference keep/ignore rules |
+| [`ugc-people`](skills/ugc-people/) | UGC-style single-person ad photos — selfie POV + talking-head formats for 9:16 TikTok/Reels |
 
 ## Install
 
@@ -41,19 +43,26 @@ skills/
 ├── index.json             # sha256 + bytes per file (generated)
 ```
 
+## How the CLI consumes this
+
+The `vsb` CLI fetches `skills/index.json` from
+`https://raw.githubusercontent.com/vladartym/vsb-skills/main/skills/index.json`
+on demand, then pulls each listed file and verifies sha256. Results are
+cached in `~/.vsb/skills-cache/`. Power users can pin to a tag, branch,
+or sha with `VSB_SKILLS_REF=v0.3 vsb init`.
+
 ## Contributing
 
-Edits land in `skills/<name>/SKILL.md`. After editing:
+Edits land in `skills/<name>/SKILL.md`. After editing locally:
 
 ```bash
-# Regen index.json with fresh sha256
-bun run scripts/gen-index.ts
-
-# (or, until the local script lands, run the equivalent in vsb-cli)
-cd ../cli && bun run skills:index
+bun run gen
 ```
 
-Then bump the version in `index.json` and open a PR.
+That regenerates `skills/index.json` with fresh sha256s. The CI workflow
+in `.github/workflows/index.yml` also regenerates the index on every
+push to `main`, so manual runs are mainly for previewing the diff
+before opening a PR.
 
 ## License
 

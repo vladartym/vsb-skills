@@ -1,0 +1,14 @@
+{
+  "name": "vsb-skills",
+  "private": true,
+  "description": "Agent skill packs for Visual Sandbox — consumed by the vsb CLI.",
+  "license": "MIT",
+  "type": "module",
+  "scripts": {
+    "gen": "bun run scripts/gen-index.ts"
+  },
+  "devDependencies": {
+    "bun-types": "^1.3.10",
+    "typescript": "^5.9.3"
+  }
+}

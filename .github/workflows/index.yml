@@ -1,0 +1,34 @@
+name: Regen index.json
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - "skills/**/*.md"
+      - "scripts/gen-index.ts"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  regen:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: oven-sh/setup-bun@v2
+        with:
+          bun-version: latest
+      - name: Regenerate index.json
+        run: bun run scripts/gen-index.ts
+      - name: Commit if changed
+        run: |
+          if ! git diff --quiet skills/index.json; then
+            git config user.name "github-actions[bot]"
+            git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+            git add skills/index.json
+            git commit -m "chore: regen skills/index.json [skip ci]"
+            git push
+          else
+            echo "index.json already up to date"
+          fi
