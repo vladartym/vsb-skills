@@ -35,6 +35,17 @@
       ]
     },
     {
+      "name": "p-video",
+      "description": "Prompt and run Pruna AI's P-Video (`video/p-video`) well — the cheapest video model in Visual Sandbox, with a built-in `draft` toggle that drops cost ~4×. Trigger whenever the user is about to call `vsb run video/p-video` or asks \"cheapest video model\", \"draft video\", \"iterate fast\", or \"lots of video variations\". Always ask the user **draft or standard** before running. Pairs with the parent [`video`](../video/SKILL.md) skill for the async + poll pattern.",
+      "files": [
+        {
+          "path": "SKILL.md",
+          "sha256": "f1e562133894ffc9ccdda754b86a229204b0a2eb6b60b8252c9b96a4720562e1",
+          "bytes": 6558
+        }
+      ]
+    },
+    {
       "name": "nano-banana",
       "description": "Prompt the Nano Banana family (Google's Gemini Image — `image/nano-banana`, `image/nano-banana-2`, `image/nano-banana-pro`) well. Trigger whenever the user is about to call `vsb run image/nano-banana*` or asks how to phrase a prompt for these models — covers the variant picker, edit-mode rules, text rendering, multi-reference blending, and the things this family gets wrong. For the universal prompt-anatomy rules and reference-image subject-anchor pattern, read [`image-prompting`](../image-prompting/SKILL.md) first — this skill only adds nano-banana-specific quirks on top.",
       "files": [
@@ -88,8 +99,8 @@
       "files": [
         {
           "path": "SKILL.md",
-          "sha256": "41812de328c4c88030b1509eeac24fbee4592e9ffae34cb25386227fe2ae2dc1",
-          "bytes": 5410
+          "sha256": "38c15ec74146617a07db7942912f5df7085180b77e4853de02c1281ac14ab030",
+          "bytes": 5665
         }
       ]
     },

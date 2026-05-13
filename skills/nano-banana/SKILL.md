@@ -98,6 +98,14 @@ The universal subject-anchor pattern (in
   up to **14 references** per prompt; standard nano-banana is best with
   **1–3**. For more than 3 references, switch to Pro.
 
+## Multi-subject anatomy lock
+
+Multi-person scenes hallucinate extra hands/arms when limb count is left
+implicit. Budget every visible limb: state the exact total ("visible
+hands: 2"), name whose and where each is, then declare the remaining arms
+out of frame or hidden behind a torso. Same rule applies to feet on
+full-body shots.
+
 ## What this family gets wrong (known limits)
 
 Adds to the model-agnostic failure modes in

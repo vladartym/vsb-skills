@@ -46,6 +46,7 @@ Verify with `vsb models --modality video --json | jq '.models[] | {slug, categor
 | Image-to-video with brush motion | `video/kling-v3-motion-control` | Kuaishou. Requires a seed image + a motion specification. Fine-grained control over what moves. |
 | General-purpose, cheap | `video/seedance-2` | ByteDance. Solid quality, lower cost. |
 | Same family, faster | `video/seedance-2-fast` | Lower quality but ~2× faster than `seedance-2`. |
+| Cheapest in catalog, iterate fast | `video/p-video` | Pruna AI. Built-in `draft` toggle drops cost ~4× (~$0.005/s at 720p draft). Supports text, image, AND audio conditioning. Looser safety filter than Seedance. See [`p-video`](../p-video/SKILL.md). |
 
 ## Veo 3.1 (text-to-video, image-to-video)
 
