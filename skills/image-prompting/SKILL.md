@@ -87,9 +87,15 @@ vsb models --modality image --json \
   | jq -r '.models[] | "\(.category)/\(.slug)"' \
   | while read s; do
       printf "%-50s " "$s"
-      vsb pricing "$s" --json 2>/dev/null | jq -r '.user_cost_estimate // "n/a"'
+      vsb pricing "$s" --json 2>/dev/null \
+        | jq -r '.user_cost_estimate // "tiered(\(.tiers | length // 0))"'
     done | sort -k2 -n
 ```
+
+Models with `user_cost_estimate: null` are **tiered** (cost depends on
+quality/resolution input, e.g. `nano-banana-pro`, `gpt-image-2`). Don't drop
+them — inspect `vsb pricing <slug> --json` to read the tier table and pick
+the cheapest tier you can live with.
 
 Cheapest row wins. Then verify it supports refs:
 
@@ -98,6 +104,13 @@ vsb schema image/<slug> --json | jq '.inputs.image_input'
 ```
 
 `null` → no reference editing. Bump up the ladder until you find one.
+
+**CLI quirk — array inputs.** `image_input` is `array<string>`. Pass either
+as repeated flags (`--image_input a --image_input b`) or as a JSON-array
+string (`--image_input '["a","b"]'`). The CLI auto-wraps a single bare
+string, but mixed forms with other agents may emit a single bare value —
+use `vsb run <slug> --help` to confirm the array shape before composing
+the command.
 
 (Future: `vsb pricing --modality image --all` should ship as a built-in — see vsb CLI backlog.)
 

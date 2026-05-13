@@ -149,14 +149,23 @@ Verify the live catalog: `vsb models --modality image --json | jq '.models[]
 
 | Need | Default slug | Why |
 |------|--------------|-----|
-| Raw UGC realism, single shot | `image/gpt-image-2` | OpenAI. Current operator favourite for photoreal humans. Accepts negative-energy prompts ("failed candid shot") well. Weaker text rendering. |
-| Multi-shot character consistency, text/product label legibility | `image/nano-banana-pro` | Google. Strongest prompt adherence + text. Polished-AI baseline — needs explicit anti-plastic cues. |
-| Quick, cheap, good enough | `image/nano-banana` | Same family, fastest + cheapest. |
+| Raw UGC realism, single shot | `image/gpt-image-2` | OpenAI. Current operator favourite for photoreal humans. Accepts negative-energy prompts ("failed candid shot") well. Weaker text rendering. Tiered cost — `Low quality` ≈ $0.006, `High quality` ≈ $0.21. |
+| Multi-shot character consistency, text/product label legibility | `image/nano-banana-pro` | Google. Strongest prompt adherence + text. Polished-AI baseline — needs explicit anti-plastic cues. Tiered cost — 1K/2K ≈ $0.15, 4K ≈ $0.30. |
+| Quick, cheap, good enough | `image/nano-banana` | Same family, fastest + cheapest among nano-banana tier. Flat ≈ $0.05. |
+| Cheapest UGC-viable, gen + edit | `image/flux-2-klein-9b` | Black Forest Labs. Flat ≈ $0.02 gen / $0.04 edit-with-ref. Identity holds well across a single edit cycle. Best test-bench default; bump to nano-banana-pro if you need multi-shot consistency. |
 
-For Flux, Midjourney, and Higgsfield-style preset notes, see
+For Midjourney and Higgsfield-style preset notes, see
 `references/model-notes.md`.
 
-Always verify the live schema: `vsb schema image/<slug> --json`.
+Always verify the live schema: `vsb schema image/<slug> --json`. Read
+per-slug help with `vsb run image/<slug> --help` — it surfaces array-typed
+inputs (e.g. `image_input: array<string>`) and string-enum quirks
+(`output_megapixels: '1'` is a string Literal, not the int 1).
+
+**Reference-image CLI shape.** `--image_input` is array-typed. Pass either
+repeated (`--image_input a --image_input b`) or as a JSON-array string
+(`--image_input '["a","b"]'`). A single bare `--image_input <path>` is
+auto-wrapped, but multi-ref calls need the repeated or JSON form.
 
 ## Quick start
 
