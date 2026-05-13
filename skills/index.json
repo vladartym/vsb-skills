@@ -35,6 +35,17 @@
       ]
     },
     {
+      "name": "nano-banana",
+      "description": "Prompt the Nano Banana family (Google's Gemini Image — `image/nano-banana`, `image/nano-banana-2`, `image/nano-banana-pro`) well. Trigger whenever the user is about to call `vsb run image/nano-banana*` or asks how to phrase a prompt for these models — covers the variant picker, edit-mode rules, text rendering, multi-reference blending, and the things this family gets wrong. For the universal prompt-anatomy rules and reference-image subject-anchor pattern, read [`image-prompting`](../image-prompting/SKILL.md) first — this skill only adds nano-banana-specific quirks on top.",
+      "files": [
+        {
+          "path": "SKILL.md",
+          "sha256": "2c9b8aee4ae65c5e837e61a64e29587ecbbcda618876653cd06f39f2ec0e990e",
+          "bytes": 8847
+        }
+      ]
+    },
+    {
       "name": "p-video",
       "description": "Prompt and run Pruna AI's P-Video (`video/p-video`) well — the cheapest video model in Visual Sandbox, with a built-in `draft` toggle that drops cost ~4×. Trigger whenever the user is about to call `vsb run video/p-video` or asks \"cheapest video model\", \"draft video\", \"iterate fast\", or \"lots of video variations\". Always ask the user **draft or standard** before running. Pairs with the parent [`video`](../video/SKILL.md) skill for the async + poll pattern.",
       "files": [
@@ -42,17 +53,6 @@
           "path": "SKILL.md",
           "sha256": "f1e562133894ffc9ccdda754b86a229204b0a2eb6b60b8252c9b96a4720562e1",
           "bytes": 6558
-        }
-      ]
-    },
-    {
-      "name": "nano-banana",
-      "description": "Prompt the Nano Banana family (Google's Gemini Image — `image/nano-banana`, `image/nano-banana-2`, `image/nano-banana-pro`) well. Trigger whenever the user is about to call `vsb run image/nano-banana*` or asks how to phrase a prompt for these models — covers the variant picker, edit-mode rules, text rendering, multi-reference blending, and the things this family gets wrong. For the universal prompt-anatomy rules and reference-image subject-anchor pattern, read [`image-prompting`](../image-prompting/SKILL.md) first — this skill only adds nano-banana-specific quirks on top.",
-      "files": [
-        {
-          "path": "SKILL.md",
-          "sha256": "04f569046dd195036ba1ab507e9f49c2964b61cf2f7b45a33faadb2b9ebf054c",
-          "bytes": 8514
         }
       ]
     },
