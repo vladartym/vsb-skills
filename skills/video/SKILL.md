@@ -58,14 +58,26 @@ JOB=$(vsb run video/veo-3.1-fast \
   --async --json | jq -r '.job_id')
 
 # Image-to-video — pass the still image to seed the first frame (verify the exact
-# field name with `vsb schema video/<slug>`; currently `image` for veo + kling)
+# field name with `vsb schema video/<slug>`; currently `image` for veo + kling).
+# IMPORTANT: always pass --aspect_ratio matching the source image. Most video
+# models default to 16:9 and will silently crop/letterbox a portrait seed.
 URL=$(vsb upload ./still.jpg --json | jq -r '.url')
 JOB=$(vsb run video/veo-3.1-fast \
   --prompt "the woman turns her head and smiles" \
   --image "$URL" \
+  --aspect_ratio 9:16 \
   --duration 5 \
   --async --json | jq -r '.job_id')
 ```
+
+### Matching source aspect
+
+When the seed comes from a sandbox node, read its aspect off the live canvas
+instead of guessing — `vsb sandbox selection --json | jq -r '.nodes[0].generation.aspect_ratio'`
+gives you `"9:16"`, `"16:9"`, `"1:1"`, etc. Pass that string straight into
+`--aspect_ratio`. For an uploaded local file, use `sips -g pixelWidth -g pixelHeight ./still.jpg`
+(macOS) or `identify -format "%wx%h" ./still.jpg` (ImageMagick) and pick the
+nearest ratio in the model's `enum` (`vsb schema video/<slug> --json | jq '.inputs.aspect_ratio.enum'`).
 
 Veo prompts work best when they describe **camera + subject + motion**. "Static
 shot of a tiger" is a hint to keep the camera still; "tracking shot following
@@ -115,5 +127,6 @@ Returns 1 if the job already finished. Clean exit code = clean cancel.
 - **Status can stay at `queued` for 30+ seconds** before flipping to `in_progress`. That's the provider queue, not your CLI hanging.
 - **`progress` can be `null` even mid-run** — not all providers report it.
 - **Some video models reject aspect ratios you'd expect to work.** Check `vsb schema video/<slug> --json | jq '.inputs.aspect_ratio.enum'` to see the allowed list.
+- **Default aspect is 16:9 on veo + seedance.** Image-to-video runs that omit `--aspect_ratio` silently crop or letterbox a 9:16 / 1:1 seed. Always pass the aspect that matches the source image (see "Matching source aspect" above).
 - **Result `urls` may be a single-element array** — extract index 0 if you need a single URL.
 - **Don't poll faster than every 3–5 seconds.** The async runner backoffs internally; tight client loops just waste API quota.
