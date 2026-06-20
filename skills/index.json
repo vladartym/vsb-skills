@@ -51,8 +51,19 @@
       "files": [
         {
           "path": "SKILL.md",
-          "sha256": "f1e562133894ffc9ccdda754b86a229204b0a2eb6b60b8252c9b96a4720562e1",
-          "bytes": 6558
+          "sha256": "01ddf012d4aa084bfb251f5f8c1ef9e8e9a43185bc43d197207709cec6282c09",
+          "bytes": 6738
+        }
+      ]
+    },
+    {
+      "name": "p-video-prompting",
+      "description": "Canonical prompt-craft skill for Pruna AI's P-Video (`video/p-video`) in Visual Sandbox. Read before writing any `vsb run video/p-video` prompt — text-to-video, image-to-video, or audio-conditioned. Covers the official Pruna slot formula (Subject / Action / Scene / Camera / Lighting / Style / Audio), the image-to-video narration pattern for talking avatars, the DO/DON'T list straight from Pruna's docs, and the `prompt_upsampling` override rule. Pairs with [`p-video`](../p-video/SKILL.md) for runtime (draft toggle, pricing, schema, async + poll).",
+      "files": [
+        {
+          "path": "SKILL.md",
+          "sha256": "7c9059a3cd9365c77f53ba1881af6eae520606c03f1b11589c69bc0f055e984c",
+          "bytes": 8427
         }
       ]
     },

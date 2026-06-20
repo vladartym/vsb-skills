@@ -18,6 +18,10 @@ Cheapest video model in the catalog. Fast iteration. Two-mode runtime via the
 Read the parent [`video`](../video/SKILL.md) skill first for the universal
 async + poll + cancel pattern. This skill only adds p-video–specific behavior.
 
+Prompt craft — slot formula, narration pattern, DO/DON'T — lives in the
+sibling [`p-video-prompting`](../p-video-prompting/SKILL.md) skill. Load it
+before writing any prompt.
+
 Verify the live schema before assuming fields:
 
 ```bash
