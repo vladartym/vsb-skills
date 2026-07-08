@@ -205,6 +205,7 @@ inspect `.status` first.
 vsb feedback "Ran image/nano-banana with image_input; expected an edited image, got exit 1 'ProviderError: upstream 500' after 3 retries. job_id 8f3..." --kind bug --json
 ```
 
+- Not a bug: if the CLI refuses to run with an unsupported-version error (`error_type: "unsupported_version"` on stderr), run `vsb update --json` and retry the original command — don't report it.
 - `--kind`: `bug` for errors, `comment` for suggestions/feature requests, `like` for praise (default: `comment`).
 - `--image <path>` attaches a screenshot (png/jpg/gif/webp, max 8 MB).
 - CLI version + platform are appended automatically — don't repeat them in the message.
