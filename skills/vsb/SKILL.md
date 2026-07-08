@@ -55,6 +55,7 @@ A running job must never hold the agent's turn hostage. Start it, note the id, k
 | `vsb sandbox selection` | Read what the user has selected on the canvas (prompt, model, image URL) |
 | `vsb sandbox nodes` | List every node on the active sandbox (slim by default, `--full` for raw, `--limit N` to cap, `--kind generation\|upload` to filter) |
 | `vsb sandbox node <uuid>` | Full detail for one node — prompt, all output URLs, media_asset, position |
+| `vsb feedback "<msg>"` | Send feedback/bug report to the Visual Sandbox team (`--kind`, `--image`) |
 | `vsb skills <list|install|update|remove>` | Manage agent skill packs in `.claude/skills/` |
 | `vsb init` | One-shot install of the default skill bundle |
 
@@ -188,6 +189,22 @@ vsb status <job_id> --result --json | jq '.result.urls'
 
 `--result` blocks if the job is still running; for an instant peek skip it and
 inspect `.status` first.
+
+## When something breaks — offer to send feedback
+
+`vsb feedback` sends a message (and optional screenshot) straight to the Visual Sandbox team.
+
+- On a persistent error, a broken model, or anything the user is unhappy with, offer: "Want me to report this to the developer?"
+- Never send without asking first — feedback is tied to the user's account.
+- On yes, write a short paragraph yourself — what was run, what was expected, what actually happened (exact error message, exit code, `job_id` if there is one) — show it to the user, then send:
+
+```bash
+vsb feedback "Ran image/nano-banana with image_input; expected an edited image, got exit 1 'ProviderError: upstream 500' after 3 retries. job_id 8f3..." --kind bug --json
+```
+
+- `--kind`: `bug` for errors, `comment` for suggestions/feature requests, `like` for praise (default: `comment`).
+- `--image <path>` attaches a screenshot (png/jpg/gif/webp, max 8 MB).
+- CLI version + platform are appended automatically — don't repeat them in the message.
 
 ## Exit codes (for shell scripting)
 

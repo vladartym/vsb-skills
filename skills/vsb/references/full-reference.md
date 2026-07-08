@@ -252,6 +252,24 @@ Override semantics for `run`:
 
 ---
 
+## `vsb feedback <message>`
+
+Send feedback or a bug report to the Visual Sandbox team. Bearer auth required. Form-encoded POST to `/api/v1/feedback/`; lands in the team's Discord with `vsb-cli v<version> (<platform>-<arch>)` as the source tag.
+
+| Flag | Description |
+|------|-------------|
+| `--kind <kind>` | `comment` (default), `bug`, or `like` |
+| `--image <path>` | Attach a screenshot — png/jpg/gif/webp, max 8 MB |
+
+```bash
+vsb feedback "schema for video/seedance-2 lists a flag run rejects" --kind bug --image ./error.png --json
+# → {"status":"sent","kind":"bug","message":"..."}
+```
+
+Exit 3 without an API key, exit 2 on invalid `--kind` or missing image file.
+
+---
+
 ## `vsb skills`
 
 | Command | Purpose |
