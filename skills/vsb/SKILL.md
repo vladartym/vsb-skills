@@ -20,7 +20,7 @@ For full reference (every command, every flag, every exit code), see
 2. **Never invent slugs.** Use `vsb models "<query>" --json` to discover, then `vsb schema <category>/<slug> --json` to verify before `vsb run`.
 3. **Slugs are `<category>/<name>`.** Examples: `image/nano-banana`, `video/veo-3.1`, `audio/elevenlabs-sound-fx`. Some names contain a slash (`vector/google/gemini-3.1-pro`) — keep them as one token.
 4. **Inspect schema before running.** `vsb schema <slug> --json` shows exact field names, types, defaults, enums, and which are required.
-5. **Use `--download` for files**, never `curl`. The CLI handles auth headers, redirects, and naming templates. Downloads after a completed job; templates support `{request_id}`, `{index}`, `{ext}`.
+5. **Local saves are opt-in — ask the user first.** Every run already lands on their canvas at `https://visualsandbox.com/sandbox/`, so a local copy is optional. Ask once per session ("Want these saved locally too?") and remember the answer. When they do want files, use `--download`, never `curl` — the CLI handles auth headers, redirects, and naming templates (`{request_id}`, `{index}`, `{ext}`).
 6. **Image is sync, video and audio are async.** Image runs typically finish in ~5–10s — `vsb run image/...` blocks fine. Video/audio can take 30s–3min — use `--async`, then poll with `vsb status <job_id> --result --download <template>`. Never let a running job block the conversation — see [Background generations](#background-generations-keep-the-conversation-free).
 7. **Estimate cost first.** `vsb pricing <category>/<slug> --json` returns `user_cost_estimate`. Show it to the user before running expensive video models.
 8. **Auth.** Run `vsb setup` once — opens a browser to issue an API key, writes it to `~/.vsb/config.json`. Or set `VSB_API_KEY` in the env / `.env`. `vsb pricing` and most write endpoints require auth.
@@ -36,7 +36,8 @@ A running job must never hold the agent's turn hostage. Start it, note the id, k
 - Don't call `vsb status --result` right after starting — it blocks until the job finishes. Check `.status` non-blocking instead: `vsb status <job_id> --json | jq -r '.status'`.
 - If the agent harness supports background shells (e.g. Claude Code `run_in_background`), run the wait there — `vsb status <job_id> --result --json` in a background task notifies on completion while the conversation continues.
 - Between other tasks (or when the user asks "is it done?"), sweep all pending ids: `for j in $JOBS; do vsb status "$j" --json | jq -r '"\(.job_id) \(.status)"'; done`.
-- Only after `status == "completed"`, fetch + download: `vsb status <job_id> --result --download "./out/{request_id}.{ext}" --json`.
+- Only after `status == "completed"`, fetch the result: `vsb status <job_id> --result --json`. Add `--download "./out/{request_id}.{ext}"` only if the user asked for local copies (critical rule 5).
+- When reporting a finished job, point the user at their canvas: every generation is viewable at `https://visualsandbox.com/sandbox/`.
 - Keep serving other `vsb` requests (images, schema lookups, more runs) while jobs cook — async jobs are independent; parallel is fine.
 
 ## Command index
@@ -94,6 +95,8 @@ vsb run image/nano-banana \
   --download "./out/{request_id}.{ext}" \
   --json
 ```
+
+`--download` in these patterns assumes the user said yes to local saves (critical rule 5) — drop it otherwise; the result is on their canvas either way.
 
 ### 2. Discover when the user gives a fuzzy task
 
