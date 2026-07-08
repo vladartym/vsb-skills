@@ -21,12 +21,23 @@ For full reference (every command, every flag, every exit code), see
 3. **Slugs are `<category>/<name>`.** Examples: `image/nano-banana`, `video/veo-3.1`, `audio/elevenlabs-sound-fx`. Some names contain a slash (`vector/google/gemini-3.1-pro`) — keep them as one token.
 4. **Inspect schema before running.** `vsb schema <slug> --json` shows exact field names, types, defaults, enums, and which are required.
 5. **Use `--download` for files**, never `curl`. The CLI handles auth headers, redirects, and naming templates. Downloads after a completed job; templates support `{request_id}`, `{index}`, `{ext}`.
-6. **Image is sync, video and audio are async.** Image runs typically finish in ~5–10s — `vsb run image/...` blocks fine. Video/audio can take 30s–3min — use `--async`, then poll with `vsb status <job_id> --result --download <template>`.
+6. **Image is sync, video and audio are async.** Image runs typically finish in ~5–10s — `vsb run image/...` blocks fine. Video/audio can take 30s–3min — use `--async`, then poll with `vsb status <job_id> --result --download <template>`. Never let a running job block the conversation — see [Background generations](#background-generations-keep-the-conversation-free).
 7. **Estimate cost first.** `vsb pricing <category>/<slug> --json` returns `user_cost_estimate`. Show it to the user before running expensive video models.
 8. **Auth.** Run `vsb setup` once — opens a browser to issue an API key, writes it to `~/.vsb/config.json`. Or set `VSB_API_KEY` in the env / `.env`. `vsb pricing` and most write endpoints require auth.
 9. **Every `vsb run` auto-attaches to the user's live sandbox.** Each completed generation becomes a draggable node on `https://visualsandbox.com/sandbox/`. To opt out for a one-off script, pass `--no-sandbox`. To target a non-default sandbox, pass `--sandbox-uuid <uuid>`. Runs with `n>1` (currently `image/gpt-image-2`) drop **one node per output image**; each gets its own `output_index` (0..N-1) so every variant is reachable on the canvas.
 10. **Selection-aware prompts.** When the user's request references "this", "him", "the image", "selected", "that one" — or anything that implies a subject already on screen — call `vsb sandbox selection --json` first. Returns the node(s) the user has selected on the canvas: prompt, model, output URL. Pass the `output_url` as the input image to the next `vsb run` (e.g. `--image_urls "[\"<url>\"]"` for nano-banana). If selection is empty, ask the user to click a node before continuing.
 11. **Canvas survey vs drill-in.** Use `vsb sandbox nodes --json --limit N` for a slim overview of the whole canvas (~360 B/node — newest first, just uuid + slug + url + position). When you've picked a target, `vsb sandbox node <uuid> --json` returns full detail (prompt + all output URLs + media_asset). This two-step keeps context cheap even on a 20+ node sandbox.
+
+## Background generations (keep the conversation free)
+
+A running job must never hold the agent's turn hostage. Start it, note the id, keep working.
+
+- Start long jobs (video, audio, batches) with `--async --json`, capture `job_id`, move on immediately.
+- Don't call `vsb status --result` right after starting — it blocks until the job finishes. Check `.status` non-blocking instead: `vsb status <job_id> --json | jq -r '.status'`.
+- If the agent harness supports background shells (e.g. Claude Code `run_in_background`), run the wait there — `vsb status <job_id> --result --json` in a background task notifies on completion while the conversation continues.
+- Between other tasks (or when the user asks "is it done?"), sweep all pending ids: `for j in $JOBS; do vsb status "$j" --json | jq -r '"\(.job_id) \(.status)"'; done`.
+- Only after `status == "completed"`, fetch + download: `vsb status <job_id> --result --download "./out/{request_id}.{ext}" --json`.
+- Keep serving other `vsb` requests (images, schema lookups, more runs) while jobs cook — async jobs are independent; parallel is fine.
 
 ## Command index
 
