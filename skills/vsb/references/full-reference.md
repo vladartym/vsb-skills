@@ -21,6 +21,8 @@ These work on every command:
 |-----|---------|
 | `VSB_API_KEY` | Bearer key (issued by `vsb setup` or the in-product CLI Tokens page). |
 | `VSB_API_BASE` | Override base URL (default: `https://visualsandbox.com/api`). Useful for staging. |
+| `VSB_NO_UPDATE_CHECK` | Set to `1` to disable the daily version probe entirely. |
+| `VSB_NO_AUTO_UPDATE` | Set to `1` to disable the background binary auto-update and the startup skills auto-sync (banner still prints). |
 | `NO_COLOR` | Disable ANSI colors. |
 
 `vsb setup` writes both to `~/.vsb/config.json`. The CLI also auto-loads
@@ -282,6 +284,21 @@ Exit 3 without an API key, exit 2 on invalid `--kind` or missing image file.
 A manifest tracks installs at `./.agents/skills/.installed.json` (sha256 per file) so `update` is precise.
 
 v0.1 only writes to `.claude/skills/`. Cursor + AGENTS.md targets land in v0.2.
+
+## `vsb update` + auto-update
+
+`vsb update` downloads the latest GitHub release and atomically swaps the compiled binary in place. Dev installs (running under Bun) get manual `git pull` instructions instead.
+
+Auto-update is **on by default** and needs no action:
+
+- Every command fires a 1.5s-bounded version probe (cached 24h in `~/.vsb/config.json`).
+- Newer minor/patch → a detached child downloads + swaps the binary in the background; the next `vsb` run is the new version. Logs to `~/.vsb/auto-update.log`. Spawns are throttled to one per 10 minutes.
+- Major bumps never auto-land — they wait for an explicit `vsb update`.
+- Below the server's `min_supported` floor the CLI refuses to run (structured JSON error on stderr in `--json` mode).
+- **Skills auto-sync**: on startup the CLI diffs installed skills in `~/.claude/skills/` and the project root against the embedded bundle (sha256, local-only, silent) and re-copies stale ones — installed skills always match the binary version.
+- Opt-outs: `VSB_NO_AUTO_UPDATE=1` (binary swap + skills sync), `VSB_NO_UPDATE_CHECK=1` (probe entirely).
+
+---
 
 ## `vsb init`
 

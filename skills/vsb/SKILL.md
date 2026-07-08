@@ -58,6 +58,9 @@ A running job must never hold the agent's turn hostage. Start it, note the id, k
 | `vsb feedback "<msg>"` | Send feedback/bug report to the Visual Sandbox team (`--kind`, `--image`) |
 | `vsb skills <list|install|update|remove>` | Manage agent skill packs in `.claude/skills/` |
 | `vsb init` | One-shot install of the default skill bundle |
+| `vsb update` | Update the CLI binary now (auto-update runs in the background by default) |
+
+The CLI keeps itself and installed skills current automatically: minor/patch releases swap the binary in the background, and on startup installed skills are re-synced to match the running binary. No action needed — details and opt-outs in [full-reference.md](references/full-reference.md#vsb-update--auto-update).
 
 ## JobOut shape (what `run` and `status` return)
 
