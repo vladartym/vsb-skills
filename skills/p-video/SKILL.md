@@ -39,23 +39,23 @@ Draft (cheap, fast — for iteration) or standard (final-quality render)?
 
 | Mode | `--draft` | 720p | 1080p | When to pick |
 |------|-----------|------|-------|--------------|
-| **Draft**    | `true`  | $0.005/s | $0.01/s | Trying out a prompt. Exploring 5–10 variations. Storyboards. Anything you'd re-run. |
-| **Standard** | `false` | $0.02/s  | $0.04/s | Locking the final shot. Delivering to client. The shot you'll post. |
+| **Draft**    | `true`  | $0.00625/s | $0.0125/s | Trying out a prompt. Exploring 5–10 variations. Storyboards. Anything you'd re-run. |
+| **Standard** | `false` | $0.025/s   | $0.05/s   | Locking the final shot. Delivering to client. The shot you'll post. |
 
-A 5s 720p draft = $0.025. The same shot at standard = $0.10 (4×). Use draft
+A 5s 720p draft ≈ $0.03. The same shot at standard = $0.125 (4×). Use draft
 to land the prompt + composition, then run **the exact same args with
 `--draft false`** once to lock the final.
 
 ## Pricing reference
 
-Add 25% Visual Sandbox markup to the raw provider rates:
+What you pay (verify live with `vsb pricing video/p-video --json`):
 
-| Resolution | Mode | Raw $/s | User $/s |
-|------------|------|---------|----------|
-| 720p  | draft on  | $0.005 | $0.00625 |
-| 720p  | draft off | $0.02  | $0.025   |
-| 1080p | draft on  | $0.01  | $0.0125  |
-| 1080p | draft off | $0.04  | $0.05    |
+| Resolution | Mode | $/s |
+|------------|------|-----|
+| 720p  | draft on  | $0.00625 |
+| 720p  | draft off | $0.025   |
+| 1080p | draft on  | $0.0125  |
+| 1080p | draft off | $0.05    |
 
 Per-second billing. `--duration` is integer 1–10 (default 5).
 

@@ -79,7 +79,6 @@ The CLI keeps itself and installed skills current automatically: minor/patch rel
     "width": 1024,
     "height": 1024,
     "cost": 0.04875,
-    "raw_cost": 0.039,
     "predict_time": 5.167
   },
   "error": null

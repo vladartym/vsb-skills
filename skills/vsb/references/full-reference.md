@@ -75,7 +75,7 @@ Returns a `RegistryResponse`:
       "tags": [],
       "inputs_schema": { "..." : "JSONSchema dict" },
       "ui_hints": { "labels": {}, "option_labels": {}, "hidden": [] },
-      "default_cost_usd": 0.039,
+      "default_cost_usd": 0.05,
       "default_cost_unit": "image"
     }
   ]
@@ -127,8 +127,6 @@ Cost lookup for a model. **Bearer auth required** (API key.)
   "slug": "image/nano-banana",
   "currency": "USD",
   "unit": "image",
-  "base_cost": 0.039,
-  "markup_percent": 25,
   "user_cost_estimate": 0.04875,
   "tiers": [],
   "notes": "Per-image pricing, no resolution surcharge."
@@ -203,7 +201,7 @@ Poll a job. By default returns `JobOut` as-is.
   "progress": 42,
   "created_at": "...",
   "completed_at": "...",
-  "result": null | { "urls": [...], "format": "mp4", "cost": 0.45, "raw_cost": 0.36, "predict_time": 32.1, "width": 1920, "height": 1080 },
+  "result": null | { "urls": [...], "format": "mp4", "cost": 0.45, "predict_time": 32.1, "width": 1920, "height": 1080 },
   "error": null | { "code": "...", "message": "...", "retry_after": null, "details": null },
   "metadata": { "external_id": "...", "provider": "fal", "queued_at": "...", "started_at": "...", "cancelled_at": null },
   "parent_uuid": null
