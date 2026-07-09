@@ -321,7 +321,7 @@ v0.1 only writes to `.claude/skills/`. Cursor + AGENTS.md targets land in v0.2.
 
 ## `vsb update` + auto-update
 
-`vsb update` downloads the latest GitHub release and atomically swaps the compiled binary in place. Dev installs (running under Bun) get manual `git pull` instructions instead.
+`vsb update` downloads the latest GitHub release and atomically swaps the compiled binary in place. Dev installs (running under Bun) auto-update too: a background `git pull --ff-only && bun install && bun run gen` fires when the checkout is on `main` with no modified tracked files; a dirty tree or non-main branch falls back to a printed manual command.
 
 Auto-update is **on by default** and needs no action:
 
