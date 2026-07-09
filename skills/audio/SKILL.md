@@ -40,6 +40,11 @@ done
 vsb status "$JOB" --result --download "./out/{request_id}.mp3" --json
 ```
 
+`--download` only if the user opted into local saves — otherwise fetch with
+`--result --json` alone and hand back the share page
+`https://visualsandbox.com/share/<job_id>/`, never a raw CDN URL
+([vsb critical rule 5](../vsb/SKILL.md#critical-rules-read-first)).
+
 Run `vsb schema audio/elevenlabs-sound-fx --json` to see the exact field
 names — the `text` and `duration_seconds` keys above are subject to schema
 changes.

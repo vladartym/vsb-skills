@@ -12,7 +12,9 @@ description: >
 
 Image runs are sync — `vsb run image/<slug>` blocks until done (typically
 5–10s). No `--async` needed. Pipe `--json` and `--download "<template>"` to
-capture results.
+capture results. `--download` only if the user opted into local saves —
+otherwise hand back the share page `https://visualsandbox.com/share/<job_id>/`,
+never a raw CDN URL ([vsb critical rule 5](../vsb/SKILL.md#critical-rules-read-first)).
 
 > **Before writing any image prompt, read
 > [`image-prompting`](../image-prompting/SKILL.md).** It covers the universal

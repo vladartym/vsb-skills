@@ -37,6 +37,11 @@ done
 vsb status "$JOB" --result --download "./out/{request_id}.{ext}" --json
 ```
 
+`--download` only if the user opted into local saves — otherwise fetch with
+`--result --json` alone and hand back the share page
+`https://visualsandbox.com/share/<job_id>/`, never a raw CDN URL
+([vsb critical rule 5](../vsb/SKILL.md#critical-rules-read-first)).
+
 ## Picking a model
 
 Verify with `vsb models --modality video --json | jq '.models[] | {slug, category, owner}'`.

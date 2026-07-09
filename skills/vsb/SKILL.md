@@ -20,7 +20,8 @@ For full reference (every command, every flag, every exit code), see
 2. **Never invent slugs.** Use `vsb models "<query>" --json` to discover, then `vsb schema <category>/<slug> --json` to verify before `vsb run`.
 3. **Slugs are `<category>/<name>`.** Examples: `image/nano-banana`, `video/veo-3.1`, `audio/elevenlabs-sound-fx`. Some names contain a slash (`vector/google/gemini-3.1-pro`) — keep them as one token.
 4. **Inspect schema before running.** `vsb schema <slug> --json` shows exact field names, types, defaults, enums, and which are required.
-5. **Local saves are opt-in — ask the user first.** Every run already lands on their canvas at `https://visualsandbox.com/sandbox/`, so a local copy is optional. Ask once per session ("Want these saved locally too?") and remember the answer. When they do want files, use `--download`, never `curl` — the CLI handles auth headers, redirects, and naming templates (`{request_id}`, `{index}`, `{ext}`).
+5. **Local saves are opt-in — ask the user first, including where.** Never pass `--download` by default. Every run already lands on their canvas at `https://visualsandbox.com/sandbox/`, so a local copy is optional. Ask once per session ("Want these saved locally? Current folder or somewhere else?") and remember the answer — bare `--download` writes to the current working directory; pass a path (`--download ./renders/`) to save elsewhere. When they do want files, use `--download`, never `curl` — the CLI handles auth headers, redirects, and naming templates (`{request_id}`, `{index}`, `{ext}`).
+   When the user did **not** opt into local saves, present the result as its share page, not a raw CDN URL: `https://visualsandbox.com/share/<job_id>/` (against local dev, same path on the dev host, e.g. `http://127.0.0.1:8000/share/<job_id>/`). The `job_id` from `vsb run`/`vsb status` *is* the generation uuid the share page expects. Raw `cdn.visualsandbox.com` URLs are for machine use only — chaining a result into the next run (`--image_urls`, `image_input`), never as the user-facing "here's your image" link.
 6. **Image is sync, video and audio are async.** Image runs typically finish in ~5–10s — `vsb run image/...` blocks fine. Video/audio can take 30s–3min — use `--async`, then poll with `vsb status <job_id> --result --download <template>`. Never let a running job block the conversation — see [Background generations](#background-generations-keep-the-conversation-free).
 7. **Estimate cost first.** `vsb pricing <category>/<slug> --json` returns `user_cost_estimate`. Show it to the user before running expensive video models.
 8. **Auth.** Run `vsb setup` once — opens a browser to issue an API key, writes it to `~/.vsb/config.json`. Or set `VSB_API_KEY` in the env / `.env`. `vsb pricing` and most write endpoints require auth.
@@ -37,7 +38,7 @@ A running job must never hold the agent's turn hostage. Start it, note the id, k
 - If the agent harness supports background shells (e.g. Claude Code `run_in_background`), run the wait there — `vsb status <job_id> --result --json` in a background task notifies on completion while the conversation continues.
 - Between other tasks (or when the user asks "is it done?"), sweep all pending ids: `for j in $JOBS; do vsb status "$j" --json | jq -r '"\(.job_id) \(.status)"'; done`.
 - Only after `status == "completed"`, fetch the result: `vsb status <job_id> --result --json`. Add `--download "./out/{request_id}.{ext}"` only if the user asked for local copies (critical rule 5).
-- When reporting a finished job, point the user at their canvas: every generation is viewable at `https://visualsandbox.com/sandbox/`.
+- When reporting a finished job, link its share page — `https://visualsandbox.com/share/<job_id>/` — and mention it's also on their canvas at `https://visualsandbox.com/sandbox/`. Don't paste raw CDN URLs (critical rule 5).
 - Keep serving other `vsb` requests (images, schema lookups, more runs) while jobs cook — async jobs are independent; parallel is fine.
 
 ## Command index
@@ -99,7 +100,7 @@ vsb run image/nano-banana \
   --json
 ```
 
-`--download` in these patterns assumes the user said yes to local saves (critical rule 5) — drop it otherwise; the result is on their canvas either way.
+`--download` in these patterns assumes the user said yes to local saves (critical rule 5) — drop it otherwise and hand back the share page (`https://visualsandbox.com/share/<job_id>/`); the result is on their canvas either way.
 
 ### 2. Discover when the user gives a fuzzy task
 
