@@ -22,6 +22,7 @@ These work on every command:
 | `VSB_API_KEY` | Bearer key (issued by `vsb setup` or the in-product CLI Tokens page). |
 | `VSB_API_BASE` | Override base URL (default: `https://visualsandbox.com/api`). Useful for staging. |
 | `VSB_NO_UPDATE_CHECK` | Set to `1` to disable the version probe entirely. |
+| `VSB_NO_TELEMETRY` | Set to `1` to stop sending the anonymous install id (random UUID + version + platform) with the version probe. |
 | `VSB_NO_AUTO_UPDATE` | Set to `1` to disable the background binary auto-update and the startup skills auto-sync (banner still prints). |
 | `NO_COLOR` | Disable ANSI colors. |
 
