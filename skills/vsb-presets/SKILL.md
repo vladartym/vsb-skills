@@ -16,13 +16,14 @@ examples[]}` saved server-side. Anyone with the share URL can `vsb presets
 get <uuid>` and re-run it. Same `preset_id` + same overridden inputs → the
 same kind of output (subject to model determinism).
 
-## The five subcommands
+## The six subcommands
 
 ```bash
 vsb presets list [--limit <n>] [--json]                       # your presets
 vsb presets get <uuid> [--json]                                # full detail
 vsb presets run <uuid> [--input k=v]... [--inputs-json '{}'] [--async] [--json]
 vsb presets create --from <preset.json> [--json]              # PresetIn shape
+vsb presets update <uuid> [--from <patch.json>] [--title <t>] [--description <d>] [--json]
 vsb presets delete <uuid> [--json]
 ```
 
@@ -119,7 +120,7 @@ vsb presets run 8a7f...uuid --input image_url="$NEW_URL" --json
   "image_refs": [
     { "field_key": "image_input", "array_index": 0, "url": "https://cdn.../ref.jpg" }
   ],
-  "example_urls": ["https://cdn.../prior_output.jpg"]
+  "example_urls": [{ "url": "https://cdn.../prior_output.jpg" }]
 }
 ```
 
@@ -128,9 +129,31 @@ vsb presets create --from ./my-preset.json --json
 # → returns { status: "created", uuid, share_url: "https://visualsandbox.com/p/<uuid>/" }
 ```
 
-`surface` is `imagine` for image presets, `video` for video presets. The
+`surface` is `imagine` for image presets, `video` for video presets (`flow`
+presets also carry `steps` + `user_fields` — superadmin builder feature). The
 backend resolves the actual `<category>/<slug>` for `vsb run` via the
 registry — you only need to specify `surface + model_slug` here.
+
+## Update in place (keeps the uuid + share URL)
+
+Never delete + recreate to change a preset — that churns the share URL.
+`update` PATCHes any subset of fields:
+
+```bash
+# Quick edits
+vsb presets update 8a7f...uuid --title "New title" --json
+vsb presets update 8a7f...uuid --description "New description" --json
+
+# Anything else via a partial PresetPatchIn JSON file:
+# { title?, description?, inputs?, steps?, user_fields?, example_urls? }
+vsb presets update 8a7f...uuid --from ./patch.json --json
+# → returns { status: "updated", uuid, share_url } — same uuid as before
+```
+
+- Flags layer on top of `--from` (flag wins on conflict).
+- `example_urls` **replaces** all existing examples (send the full list).
+- `steps`/`user_fields` are flow-surface only; the API 422s them elsewhere.
+- 404 → exit code 1 with a clean "Preset not found: <uuid>" message.
 
 ## Delete
 
