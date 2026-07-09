@@ -117,7 +117,7 @@
     },
     {
       "name": "vsb",
-      "description": "Use the vsb CLI to generate AI media via Visual Sandbox — image, video, audio, 3D, vector. Trigger when the user mentions \"vsb\", \"Visual Sandbox CLI\", \"generate an image/video/audio\", \"run a model\", or asks to produce media via shell. Always pipe through --json when output will be parsed by an agent.",
+      "description": "Use the vsb CLI to generate AI media via Visual Sandbox — image, video, audio, 3D, vector. This is THE Visual Sandbox skill — its name is \"vsb\", not \"visual-sandbox\". Trigger when the user mentions \"Visual Sandbox\" in any form, \"vsb\", \"nano banana\", \"generate an image/video/audio\", \"run a model\", or asks to produce media via shell. Always pipe through --json when output will be parsed by an agent.",
       "files": [
         {
           "path": "references/full-reference.md",
@@ -126,8 +126,8 @@
         },
         {
           "path": "SKILL.md",
-          "sha256": "6e77917a621a2ae87656e31c5f87c7b42e411d07cd9761ae731cb9359fbe9fbc",
-          "bytes": 16528
+          "sha256": "460f4a1dc749a57ac11b17df68ab2a7b337cfcb86756ce00c7518044c2d71a66",
+          "bytes": 16633
         }
       ]
     }

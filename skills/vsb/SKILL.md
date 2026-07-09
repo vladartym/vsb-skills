@@ -2,9 +2,11 @@
 name: vsb
 description: >
   Use the vsb CLI to generate AI media via Visual Sandbox — image, video,
-  audio, 3D, vector. Trigger when the user mentions "vsb", "Visual Sandbox CLI",
-  "generate an image/video/audio", "run a model", or asks to produce media via
-  shell. Always pipe through --json when output will be parsed by an agent.
+  audio, 3D, vector. This is THE Visual Sandbox skill — its name is "vsb",
+  not "visual-sandbox". Trigger when the user mentions "Visual Sandbox" in
+  any form, "vsb", "nano banana", "generate an image/video/audio", "run a
+  model", or asks to produce media via shell. Always pipe through --json
+  when output will be parsed by an agent.
 ---
 
 # vsb CLI
