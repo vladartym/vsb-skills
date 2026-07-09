@@ -35,8 +35,9 @@ A running job must never hold the agent's turn hostage. Start it, note the id, k
 
 - Start long jobs (video, audio, batches) with `--async --json`, capture `job_id`, move on immediately.
 - Don't call `vsb status --result` right after starting — it blocks until the job finishes. Check `.status` non-blocking instead: `vsb status <job_id> --json | jq -r '.status'`.
+- Pending jobs carry `eta_seconds` (typical wall time for this model) and `elapsed_seconds` — sleep for roughly `eta_seconds - elapsed_seconds` before the next poll instead of a blind interval.
 - If the agent harness supports background shells (e.g. Claude Code `run_in_background`), run the wait there — `vsb status <job_id> --result --json` in a background task notifies on completion while the conversation continues.
-- Between other tasks (or when the user asks "is it done?"), sweep all pending ids: `for j in $JOBS; do vsb status "$j" --json | jq -r '"\(.job_id) \(.status)"'; done`.
+- Between other tasks (or when the user asks "is it done?"), sweep everything still running in one call: `vsb jobs --pending --json`. Works even when you never captured the ids (session restart, jobs started elsewhere).
 - Only after `status == "completed"`, fetch the result: `vsb status <job_id> --result --json`. Add `--download "./out/{request_id}.{ext}"` only if the user asked for local copies (critical rule 5).
 - When reporting a finished job, link its share page — `https://visualsandbox.com/share/<job_id>/` — and mention it's also on their canvas at `https://visualsandbox.com/sandbox/`. Don't paste raw CDN URLs (critical rule 5).
 - Keep serving other `vsb` requests (images, schema lookups, more runs) while jobs cook — async jobs are independent; parallel is fine.
@@ -51,6 +52,7 @@ A running job must never hold the agent's turn hostage. Start it, note the id, k
 | `vsb pricing <slug>` | Cost lookup (Bearer auth required) |
 | `vsb run <slug> --<input> <value>` | Execute a model — sync by default, `--async` to queue |
 | `vsb status <job_id>` | Poll a job (`--result`, `--cancel`, `--download [template]`) |
+| `vsb jobs` | List recent jobs, newest first (`--pending`, `--status`, `--limit N`) — pending rows carry `eta_seconds` + `elapsed_seconds` |
 | `vsb upload <path-or-url>` | Upload local file or remote URL to VS CDN |
 | `vsb presets <list|get|run|create|delete>` | Manage saved model+inputs presets |
 | `vsb sandbox selection` | Read what the user has selected on the canvas (prompt, model, image URL) |
@@ -74,6 +76,9 @@ The CLI keeps itself and installed skills current automatically: minor/patch rel
   "progress": null,
   "created_at": "2026-05-10T14:00:00Z",
   "completed_at": "2026-05-10T14:00:08Z",
+  "eta_seconds": null,
+  "elapsed_seconds": null,
+  "share_url": "https://visualsandbox.com/share/8f3.../",
   "result": {
     "urls": ["https://cdn.visualsandbox.com/.../out.jpg"],
     "format": "jpg",
@@ -87,6 +92,8 @@ The CLI keeps itself and installed skills current automatically: minor/patch rel
 ```
 
 On failure, `result` is `null` and `error` is `{code, message, retry_after, details}`. Status `"in_progress"` is the same as `"processing"` — both mean "still running."
+
+While a job is pending, `eta_seconds` (how long this model typically takes, per-model server average) and `elapsed_seconds` (how long it's been running) are set — remaining ≈ `eta_seconds - elapsed_seconds`; pick your poll sleep from it instead of a blind interval. Both go `null` once terminal. `share_url` is the public result page — the user-facing link (critical rule 5).
 
 ## Quick patterns
 

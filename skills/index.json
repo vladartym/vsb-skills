@@ -121,13 +121,13 @@
       "files": [
         {
           "path": "references/full-reference.md",
-          "sha256": "d34927c85e8a86977092f2966cbec6c0a5824876f4322ecb83896f196a2eeea0",
-          "bytes": 10715
+          "sha256": "663ccd8423618e279c88363dd71378e6e188e3ab4461dc11abfd2c3d14f4fc9b",
+          "bytes": 12291
         },
         {
           "path": "SKILL.md",
-          "sha256": "217952b677fbd818390e95a9698795ea3ecc0ad70bdaf9cb242c67063628f3b6",
-          "bytes": 15646
+          "sha256": "6e77917a621a2ae87656e31c5f87c7b42e411d07cd9761ae731cb9359fbe9fbc",
+          "bytes": 16528
         }
       ]
     }

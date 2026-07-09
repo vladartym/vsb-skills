@@ -202,11 +202,46 @@ Poll a job. By default returns `JobOut` as-is.
   "progress": 42,
   "created_at": "...",
   "completed_at": "...",
+  "eta_seconds": 48.5,
+  "elapsed_seconds": 12.3,
+  "share_url": "https://visualsandbox.com/share/<job_id>/",
   "result": null | { "urls": [...], "format": "mp4", "cost": 0.45, "predict_time": 32.1, "width": 1920, "height": 1080 },
   "error": null | { "code": "...", "message": "...", "retry_after": null, "details": null },
   "metadata": { "external_id": "...", "provider": "fal", "queued_at": "...", "started_at": "...", "cancelled_at": null },
   "parent_uuid": null
 }
+```
+
+`eta_seconds` is how long this model typically takes end to end (per-model
+running average on the server); `elapsed_seconds` is how long the job has been
+running. Both are `null` once the job is terminal. Remaining ≈
+`eta_seconds - elapsed_seconds` — use it to pick a sensible poll sleep instead
+of a blind fixed interval. `share_url` is the public result page — the link to
+show the user (raw CDN urls are for chaining inputs only).
+
+---
+
+## `vsb jobs`
+
+List your recent jobs, newest first. Wraps `GET /v1/jobs/`
+(cursor-paginated). This is how you find jobs when the `job_id` wasn't
+captured — after a session restart, or to sweep everything still running.
+
+| Flag | Description |
+|------|-------------|
+| `--pending` | Only jobs still running (queued/processing). Client-side filter; `next_cursor` pages the unfiltered stream. |
+| `--status <s>` | Exact status filter (server-side): `queued`, `processing`, `completed`, `failed`, `cancelled` |
+| `--category <c>` | Filter by category (`image`, `video`, ...) |
+| `--slug <s>` | Filter by model slug |
+| `--limit <n>` | Max results, 1-200 (default 20) |
+| `--cursor <c>` | Pagination cursor from a prior page |
+
+JSON shape: `{ "items": [JobOut, ...], "next_cursor": "..." }` — same `JobOut`
+as `vsb status`, so pending rows carry `eta_seconds` + `elapsed_seconds`.
+
+```bash
+vsb jobs --pending --json          # everything still cooking, with ETAs
+vsb jobs --status failed --limit 5 # recent failures
 ```
 
 ---
