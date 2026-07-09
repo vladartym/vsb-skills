@@ -36,8 +36,8 @@
       "files": [
         {
           "path": "SKILL.md",
-          "sha256": "75ac6309be7a0f304984ed56fb6b24a6f982dedd23528e12d27fcadb4af96479",
-          "bytes": 6637
+          "sha256": "7b7fd919a7fdc6e30892dfb14f2d4fa89baab0a4b58e5c1f69615061b4ced5c3",
+          "bytes": 6896
         }
       ]
     },
@@ -55,13 +55,13 @@
     },
     {
       "name": "vsb-nano-banana",
-      "description": "Prompt the Nano Banana family (Google's Gemini Image — `image/nano-banana`, `image/nano-banana-2`, `image/nano-banana-pro`) well. Trigger whenever the user is about to call `vsb run image/nano-banana*` or asks how to phrase a prompt for these models — covers the variant picker, edit-mode rules, text rendering, multi-reference blending, and the things this family gets wrong. For the universal prompt-anatomy rules and reference-image subject-anchor pattern, read [`vsb-image-prompting`](../vsb-image-prompting/SKILL.md) first — this skill only adds nano-banana-specific quirks on top.",
+      "description": "Prompt the Nano Banana family (Google's Gemini Image — `image/nano-banana-2-lite`, `image/nano-banana`, `image/nano-banana-2`, `image/nano-banana-pro`) well. Trigger whenever the user is about to call `vsb run image/nano-banana*` or asks how to phrase a prompt for these models — covers the variant picker, edit-mode rules, text rendering, multi-reference blending, and the things this family gets wrong. For the universal prompt-anatomy rules and reference-image subject-anchor pattern, read [`vsb-image-prompting`](../vsb-image-prompting/SKILL.md) first — this skill only adds nano-banana-specific quirks on top.",
       "renamed_from": "nano-banana",
       "files": [
         {
           "path": "SKILL.md",
-          "sha256": "1edb566b36c994d4f6768d322f579c795e2c060d8015f62e1d64535689817cfa",
-          "bytes": 8925
+          "sha256": "e85c5c8fe7eba6dc9bbaa8560d40a2fa967782b78225d91972555b729a55f762",
+          "bytes": 9266
         }
       ]
     },

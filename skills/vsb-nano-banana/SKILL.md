@@ -2,8 +2,8 @@
 name: vsb-nano-banana
 renamed_from: nano-banana
 description: >
-  Prompt the Nano Banana family (Google's Gemini Image — `image/nano-banana`,
-  `image/nano-banana-2`, `image/nano-banana-pro`) well. Trigger whenever the
+  Prompt the Nano Banana family (Google's Gemini Image — `image/nano-banana-2-lite`,
+  `image/nano-banana`, `image/nano-banana-2`, `image/nano-banana-pro`) well. Trigger whenever the
   user is about to call `vsb run image/nano-banana*` or asks how to phrase a
   prompt for these models — covers the variant picker, edit-mode rules, text
   rendering, multi-reference blending, and the things this family gets
@@ -32,8 +32,9 @@ Verify the live schema first: `vsb schema image/nano-banana --json`.
 
 | Slug | When to use |
 |------|-------------|
-| `image/nano-banana` | Default. Fastest + cheapest (~5s, ~$0.05). Great for iterating and for everyday image-to-image edits. Best with 1–3 reference images. |
-| `image/nano-banana-2` | Same shape, higher fidelity. Use when stills aren't crisp enough on the first model. |
+| `image/nano-banana-2-lite` | **Default.** Lightweight Nano Banana 2 — same low cost as the original (~$0.05/image, ~5s) but on the newer NB2 architecture. Great for iterating and everyday text-to-image + image edits. No `resolution` or web-search knobs. |
+| `image/nano-banana` | The original Gemini 3 model. Same ~$0.05/image. Fall back here if a `nano-banana-2-lite` result looks off. Best with 1–3 reference images. |
+| `image/nano-banana-2` | Full NB2 — adds `resolution` (up to 4K) and web-search grounding. Use when stills aren't crisp enough or you need higher fidelity. |
 | `image/nano-banana-pro` | 4K-capable, sharpest text + typography, best for posters, infographics, packaging mockups, editorial work, and multi-reference character blending (up to 14 refs). Slowest + priciest of the three. |
 
 All three share the same `image_input` array, `aspect_ratio` enum, and

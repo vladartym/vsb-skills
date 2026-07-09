@@ -33,8 +33,9 @@ Verify the live catalog with `vsb models --modality image --json | jq '.models[]
 
 | Task | Default slug | Why |
 |------|--------------|-----|
-| Fast text-to-image / edit | `image/nano-banana` | Google. Cheapest, fastest, ~5s. Handles both text-to-image AND image edits — the same endpoint switches modes when a reference image array is non-empty. |
-| Higher quality / 2× output | `image/nano-banana-2` | Same shape, better fidelity. |
+| Fast text-to-image / edit | `image/nano-banana-2-lite` | Google. Default. Cheapest (~$0.05/image), fastest, ~5s, on the newer NB2 architecture. Handles both text-to-image AND image edits — the same endpoint switches modes when a reference image array is non-empty. |
+| Same cost, original model | `image/nano-banana` | The original Gemini 3 model at the same ~$0.05/image. Fall back here if a lite result looks off. |
+| Higher quality / 4K / web-grounded | `image/nano-banana-2` | Full NB2 — adds `resolution` (up to 4K) and web-search grounding. |
 | Top-tier Google output | `image/nano-banana-pro` | Most expensive of the family, sharpest detail. |
 | Photoreal / text rendering / multi-ref edit | `image/gpt-image-2` | OpenAI. Best for legible typography, posters, product mockups. Slower + pricier than Nano Banana. |
 | Background removal | `image-enhance/recraft-remove-background` | Note: category is `image-enhance`, not `image`. |
