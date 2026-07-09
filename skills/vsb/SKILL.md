@@ -44,7 +44,7 @@ A running job must never hold the agent's turn hostage. Start it, note the id, k
 
 | Command | Purpose |
 |---------|---------|
-| `vsb setup` | Configure API key (browser flow) + output preferences |
+| `vsb setup` | One-click onboarding — installs skills + browser auth, no prompts |
 | `vsb models [query]` | Search the catalog (filter by `--category`, `--modality`, `--status`) |
 | `vsb schema <slug>` | Inspect inputs/outputs (`--format compact|openapi`) |
 | `vsb pricing <slug>` | Cost lookup (Bearer auth required) |

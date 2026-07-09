@@ -44,7 +44,7 @@ What this does, in order:
 1. Installs the default agent skill bundle into `~/.claude/skills/` so Claude Code finds it in every project. Pass `--project` to install into `./.claude/skills/` instead (committable, per-project, shared via git).
 2. Opens a browser to `visualsandbox.com/account/cli-tokens/` for the user to authorize the CLI. The browser callback writes the token to `~/.vsb/config.json`.
 3. Validates the token against the live API.
-4. Saves output-format + auto-load-env preferences.
+4. Saves sensible defaults (auto output format, .env auto-load) — no prompts; override with --output-format / --no-auto-load-env.
 
 **If the browser does not open**, tell the user to copy the URL `vsb setup` printed into their browser manually. Do not retry without consent.
 
