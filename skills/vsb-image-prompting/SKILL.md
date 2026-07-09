@@ -1,5 +1,6 @@
 ---
-name: image-prompting
+name: vsb-image-prompting
+renamed_from: image-prompting
 description: >
   Canonical prompt-craft skill for every image model in Visual Sandbox
   (`image/nano-banana*`, `image/gpt-image-2`, `image/flux-2-klein-4b`, future
@@ -8,8 +9,8 @@ description: >
   list, the reference-image keep / ignore formula (what to take from the
   reference, what to ignore — watermarks, text overlays, original lighting,
   original background), and the "enumerate models before picking cheapest"
-  rule. Model-specific quirks live in sibling skills (`nano-banana`,
-  `ugc-people`).
+  rule. Model-specific quirks live in sibling skills (`vsb-nano-banana`,
+  `vsb-ugc-people`).
 ---
 
 # Image prompting (model-agnostic)
@@ -125,9 +126,9 @@ the command.
 
 ## Cross-links
 
-- Model picker → [`image`](../image/SKILL.md)
-- Nano Banana quirks (text rendering, 14-ref blend, known limits) → [`nano-banana`](../nano-banana/SKILL.md)
-- UGC format (selfie POV / talking-head) → [`ugc-people`](../ugc-people/SKILL.md)
+- Model picker → [`vsb-image`](../vsb-image/SKILL.md)
+- Nano Banana quirks (text rendering, 14-ref blend, known limits) → [`vsb-nano-banana`](../vsb-nano-banana/SKILL.md)
+- UGC format (selfie POV / talking-head) → [`vsb-ugc-people`](../vsb-ugc-people/SKILL.md)
 - Selection-chain + sandbox patterns → [`vsb`](../vsb/SKILL.md)
 
 ## Pre-flight checklist

@@ -171,7 +171,7 @@ Use this pair before falling back to "ask the user to select a node". For n>1 ru
 
 When the user says "make him purple", "remove the background", "stylize this" — they're pointing at a node already on the canvas. Read the selection first, then chain it into the next run.
 
-**Before writing the prompt, read the [`image-prompting`](../image-prompting/SKILL.md) skill.** Attaching a reference image is not enough — the prompt must say what to *keep* from the reference (subject identity) and what to *ignore* (watermarks, captions, text overlays, original background, original lighting). Without that, the model bleeds the reference's artifacts (corner watermarks, TikTok caption bars, the old scene's framing) into the new image.
+**Before writing the prompt, read the [`vsb-image-prompting`](../vsb-image-prompting/SKILL.md) skill.** Attaching a reference image is not enough — the prompt must say what to *keep* from the reference (subject identity) and what to *ignore* (watermarks, captions, text overlays, original background, original lighting). Without that, the model bleeds the reference's artifacts (corner watermarks, TikTok caption bars, the old scene's framing) into the new image.
 
 ```bash
 SEL=$(vsb sandbox selection --json)
@@ -186,9 +186,9 @@ Now: make the subject's sweater purple, same scene, same lighting. No logos, no 
   --json
 ```
 
-Pull the original prompt out of the selection (`.nodes[0].generation.prompt`) when you want to refine vs replace ("same scene, but at night") — but rewrite it into the keep/ignore + new-scene shape from [`image-prompting`](../image-prompting/SKILL.md), don't just copy it verbatim. The result lands back on the canvas next to the original.
+Pull the original prompt out of the selection (`.nodes[0].generation.prompt`) when you want to refine vs replace ("same scene, but at night") — but rewrite it into the keep/ignore + new-scene shape from [`vsb-image-prompting`](../vsb-image-prompting/SKILL.md), don't just copy it verbatim. The result lands back on the canvas next to the original.
 
-**Fanning out N variations from one reference (character pack):** same pattern, looped or run in parallel. Use one keep/ignore preamble per scene, vary only the new-scene description. See `image-prompting` for the full template.
+**Fanning out N variations from one reference (character pack):** same pattern, looped or run in parallel. Use one keep/ignore preamble per scene, vary only the new-scene description. See `vsb-image-prompting` for the full template.
 
 ### 8. Recover the result URLs of a past job
 
@@ -244,4 +244,4 @@ vsb feedback "Ran image/nano-banana with image_input; expected an edited image, 
 - **Vector**: `vector/google/gemini-3.1-pro` (slashed name), `vector/quiver-arrow-1.1`
 - **Text**: `text/openrouter-chat`
 
-For per-modality recipes, see the sibling skills: `image`, `video`, `audio`, `presets`.
+For per-modality recipes, see the sibling skills: `vsb-image`, `vsb-video`, `vsb-audio`, `vsb-presets`.

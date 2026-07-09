@@ -1,5 +1,6 @@
 ---
-name: presets
+name: vsb-presets
+renamed_from: presets
 description: >
   Run, save, override, and share reproducible Visual Sandbox configurations
   as presets. A preset bundles a model + inputs + reference assets — re-runs

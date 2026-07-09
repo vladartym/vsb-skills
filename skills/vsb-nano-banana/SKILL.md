@@ -1,5 +1,6 @@
 ---
-name: nano-banana
+name: vsb-nano-banana
+renamed_from: nano-banana
 description: >
   Prompt the Nano Banana family (Google's Gemini Image — `image/nano-banana`,
   `image/nano-banana-2`, `image/nano-banana-pro`) well. Trigger whenever the
@@ -7,13 +8,13 @@ description: >
   prompt for these models — covers the variant picker, edit-mode rules, text
   rendering, multi-reference blending, and the things this family gets
   wrong. For the universal prompt-anatomy rules and reference-image
-  subject-anchor pattern, read [`image-prompting`](../image-prompting/SKILL.md)
+  subject-anchor pattern, read [`vsb-image-prompting`](../vsb-image-prompting/SKILL.md)
   first — this skill only adds nano-banana-specific quirks on top.
 ---
 
 # Prompting Nano Banana
 
-**Read [`image-prompting`](../image-prompting/SKILL.md) first.** It covers the
+**Read [`vsb-image-prompting`](../vsb-image-prompting/SKILL.md) first.** It covers the
 four universal rules, the full prompt-anatomy slot list, the
 reference-image keep/ignore pattern, and the vocabulary banks — those apply
 to every image model. This skill only adds Nano Banana–specific behavior
@@ -21,7 +22,7 @@ that diverges from the trunk.
 
 Nano Banana is built on Gemini 3 — it reasons over the prompt before
 drawing, so the natural-language scene-description approach in
-[`image-prompting`](../image-prompting/SKILL.md) works especially well here.
+[`vsb-image-prompting`](../vsb-image-prompting/SKILL.md) works especially well here.
 The same endpoint handles text-to-image AND edits: pass `image_input` (an
 array) to switch into edit mode.
 
@@ -43,7 +44,7 @@ All three share the same `image_input` array, `aspect_ratio` enum, and
 When `image_input` is non-empty, the model is editing — the prompt should
 lead with the change and be explicit about what stays the same. The
 universal subject-anchor pattern (in
-[`image-prompting`](../image-prompting/SKILL.md)) is the floor; Nano Banana
+[`vsb-image-prompting`](../vsb-image-prompting/SKILL.md)) is the floor; Nano Banana
 takes especially well to plain-English edit instructions on top.
 
 **Good:** `"Change the man's tie to dark green. Keep the rest of the photo,
@@ -87,7 +88,7 @@ is the sharpest of the three.
 ## Multi-reference character consistency
 
 The universal subject-anchor pattern (in
-[`image-prompting`](../image-prompting/SKILL.md)) tells you *how* to phrase
+[`vsb-image-prompting`](../vsb-image-prompting/SKILL.md)) tells you *how* to phrase
 "keep the subject, ignore the rest". Nano Banana adds two specifics on top:
 
 - **Name each character / object in the prompt.** The model uses the name
@@ -109,7 +110,7 @@ full-body shots.
 ## What this family gets wrong (known limits)
 
 Adds to the model-agnostic failure modes in
-[`image-prompting`](../image-prompting/SKILL.md):
+[`vsb-image-prompting`](../vsb-image-prompting/SKILL.md):
 
 - **Tiny / dense text.** Long paragraphs at small size will hallucinate
   glyphs. Pro is best; even Pro isn't perfect.

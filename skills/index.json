@@ -2,95 +2,119 @@
   "version": 1,
   "skills": [
     {
-      "name": "audio",
+      "name": "vsb",
+      "description": "Use the vsb CLI to generate AI media via Visual Sandbox — image, video, audio, 3D, vector. This is THE Visual Sandbox skill — its name is \"vsb\", not \"visual-sandbox\". Trigger when the user mentions \"Visual Sandbox\" in any form, \"vsb\", \"nano banana\", \"generate an image/video/audio\", \"run a model\", or asks to produce media via shell. Always pipe through --json when output will be parsed by an agent.",
+      "files": [
+        {
+          "path": "references/full-reference.md",
+          "sha256": "06ea6b13d0ac68db59ebdc8896432e49a8b36b0a79fdb1e3fcc162650347f212",
+          "bytes": 12527
+        },
+        {
+          "path": "SKILL.md",
+          "sha256": "971f1c7075c337e2ac4a9dd7b24114324d397423d2676dd410dec9d03d729c25",
+          "bytes": 16669
+        }
+      ]
+    },
+    {
+      "name": "vsb-audio",
       "description": "Generate sound effects (and, in v0.2, speech + music) via Visual Sandbox. Trigger when the user wants short SFX, ambient audio, or voice generation via the vsb CLI. Async — use `vsb run audio/<slug> --async` then poll with `vsb status`.",
+      "renamed_from": "audio",
       "files": [
         {
           "path": "SKILL.md",
-          "sha256": "e5af00cda7579b37b868c58be9d10d3f82f6fc67d88fabb251b0257ed83b6d3c",
-          "bytes": 2896
+          "sha256": "36bcd386fd4fa05fa681e71ea49c80a8886f5c9bc7eb58d84f64b173397372de",
+          "bytes": 2920
         }
       ]
     },
     {
-      "name": "image",
+      "name": "vsb-image",
       "description": "Pick the right Visual Sandbox model for any image task and prompt it well. Trigger when the user wants to generate, edit, restyle, upscale, or remove the background from images via the vsb CLI. All execution goes through `vsb run image/<slug>` — sync, ~5–10s for the standard models. Always verify slugs with `vsb models --modality image --json` first.",
+      "renamed_from": "image",
       "files": [
         {
           "path": "SKILL.md",
-          "sha256": "3e30039a9ecb2ee958d5e32028dc2d7ce0aaeb0fe141a0c80f293f3c40c87378",
-          "bytes": 6581
+          "sha256": "75ac6309be7a0f304984ed56fb6b24a6f982dedd23528e12d27fcadb4af96479",
+          "bytes": 6637
         }
       ]
     },
     {
-      "name": "image-prompting",
-      "description": "Canonical prompt-craft skill for every image model in Visual Sandbox (`image/nano-banana*`, `image/gpt-image-2`, `image/flux-2-klein-4b`, future slugs). Read before writing any `vsb run image/<slug>` prompt — text-to-image or edit-with-reference. Covers the universal rules, the prompt-anatomy slot list, the reference-image keep / ignore formula (what to take from the reference, what to ignore — watermarks, text overlays, original lighting, original background), and the \"enumerate models before picking cheapest\" rule. Model-specific quirks live in sibling skills (`nano-banana`, `ugc-people`).",
+      "name": "vsb-image-prompting",
+      "description": "Canonical prompt-craft skill for every image model in Visual Sandbox (`image/nano-banana*`, `image/gpt-image-2`, `image/flux-2-klein-4b`, future slugs). Read before writing any `vsb run image/<slug>` prompt — text-to-image or edit-with-reference. Covers the universal rules, the prompt-anatomy slot list, the reference-image keep / ignore formula (what to take from the reference, what to ignore — watermarks, text overlays, original lighting, original background), and the \"enumerate models before picking cheapest\" rule. Model-specific quirks live in sibling skills (`vsb-nano-banana`, `vsb-ugc-people`).",
+      "renamed_from": "image-prompting",
       "files": [
         {
           "path": "SKILL.md",
-          "sha256": "a1e53ed98b0e3fb9eba98eb7ae9d11a1dcc3abd034bfe85710ce6459126b73fc",
-          "bytes": 7465
+          "sha256": "e29715911106de1cd45fe9e47cabad59067ce331865d20f5c8d9bd3960240720",
+          "bytes": 7531
         }
       ]
     },
     {
-      "name": "nano-banana",
-      "description": "Prompt the Nano Banana family (Google's Gemini Image — `image/nano-banana`, `image/nano-banana-2`, `image/nano-banana-pro`) well. Trigger whenever the user is about to call `vsb run image/nano-banana*` or asks how to phrase a prompt for these models — covers the variant picker, edit-mode rules, text rendering, multi-reference blending, and the things this family gets wrong. For the universal prompt-anatomy rules and reference-image subject-anchor pattern, read [`image-prompting`](../image-prompting/SKILL.md) first — this skill only adds nano-banana-specific quirks on top.",
+      "name": "vsb-nano-banana",
+      "description": "Prompt the Nano Banana family (Google's Gemini Image — `image/nano-banana`, `image/nano-banana-2`, `image/nano-banana-pro`) well. Trigger whenever the user is about to call `vsb run image/nano-banana*` or asks how to phrase a prompt for these models — covers the variant picker, edit-mode rules, text rendering, multi-reference blending, and the things this family gets wrong. For the universal prompt-anatomy rules and reference-image subject-anchor pattern, read [`vsb-image-prompting`](../vsb-image-prompting/SKILL.md) first — this skill only adds nano-banana-specific quirks on top.",
+      "renamed_from": "nano-banana",
       "files": [
         {
           "path": "SKILL.md",
-          "sha256": "2c9b8aee4ae65c5e837e61a64e29587ecbbcda618876653cd06f39f2ec0e990e",
-          "bytes": 8847
+          "sha256": "1edb566b36c994d4f6768d322f579c795e2c060d8015f62e1d64535689817cfa",
+          "bytes": 8925
         }
       ]
     },
     {
-      "name": "p-video",
-      "description": "Prompt and run Pruna AI's P-Video (`video/p-video`) well — the cheapest video model in Visual Sandbox, with a built-in `draft` toggle that drops cost ~4×. Trigger whenever the user is about to call `vsb run video/p-video` or asks \"cheapest video model\", \"draft video\", \"iterate fast\", or \"lots of video variations\". Always ask the user **draft or standard** before running. Pairs with the parent [`video`](../video/SKILL.md) skill for the async + poll pattern.",
+      "name": "vsb-p-video",
+      "description": "Prompt and run Pruna AI's P-Video (`video/p-video`) well — the cheapest video model in Visual Sandbox, with a built-in `draft` toggle that drops cost ~4×. Trigger whenever the user is about to call `vsb run video/p-video` or asks \"cheapest video model\", \"draft video\", \"iterate fast\", or \"lots of video variations\". Always ask the user **draft or standard** before running. Pairs with the parent [`vsb-video`](../vsb-video/SKILL.md) skill for the async + poll pattern.",
+      "renamed_from": "p-video",
       "files": [
         {
           "path": "SKILL.md",
-          "sha256": "3949f421ec382b53a5202ddf61c8638e9975807fd2cf4a5559f9cbd3f0253e12",
-          "bytes": 6693
+          "sha256": "47801da7c15d55855653128f50d7c1ad3ef87a68cfc9e639c4f9cbb31645b323",
+          "bytes": 6759
         }
       ]
     },
     {
-      "name": "p-video-prompting",
-      "description": "Canonical prompt-craft skill for Pruna AI's P-Video (`video/p-video`) in Visual Sandbox. Read before writing any `vsb run video/p-video` prompt — text-to-video, image-to-video, or audio-conditioned. Covers the official Pruna slot formula (Subject / Action / Scene / Camera / Lighting / Style / Audio), the image-to-video narration pattern for talking avatars, the DO/DON'T list straight from Pruna's docs, and the `prompt_upsampling` override rule. Pairs with [`p-video`](../p-video/SKILL.md) for runtime (draft toggle, pricing, schema, async + poll).",
+      "name": "vsb-p-video-prompting",
+      "description": "Canonical prompt-craft skill for Pruna AI's P-Video (`video/p-video`) in Visual Sandbox. Read before writing any `vsb run video/p-video` prompt — text-to-video, image-to-video, or audio-conditioned. Covers the official Pruna slot formula (Subject / Action / Scene / Camera / Lighting / Style / Audio), the image-to-video narration pattern for talking avatars, the DO/DON'T list straight from Pruna's docs, and the `prompt_upsampling` override rule. Pairs with [`vsb-p-video`](../vsb-p-video/SKILL.md) for runtime (draft toggle, pricing, schema, async + poll).",
+      "renamed_from": "p-video-prompting",
       "files": [
         {
           "path": "SKILL.md",
-          "sha256": "7c9059a3cd9365c77f53ba1881af6eae520606c03f1b11589c69bc0f055e984c",
-          "bytes": 8427
+          "sha256": "00493fc2d816fd3f64a74cca0b7b9bf4e0617a49519ae1ceedaa3ea33471c54b",
+          "bytes": 8511
         }
       ]
     },
     {
-      "name": "presets",
+      "name": "vsb-presets",
       "description": "Run, save, override, and share reproducible Visual Sandbox configurations as presets. A preset bundles a model + inputs + reference assets — re-runs reproduce the same kind of output. Trigger when the user mentions \"preset\", \"saved config\", a `visualsandbox.com/p/<uuid>/` share URL, or wants to re-run the same recipe across many inputs.",
+      "renamed_from": "presets",
       "files": [
         {
           "path": "SKILL.md",
-          "sha256": "004d1c37a57b97eaab369ff412b5fbb1c07c66e9d5c0f0a287792fd063977e08",
-          "bytes": 5410
+          "sha256": "4b6aa90980456df8452755fb497b509b2276db0b7b0460914723cdca8ac1095c",
+          "bytes": 5436
         }
       ]
     },
     {
-      "name": "ugc-people",
-      "description": "Prompt AI image models to produce UGC-style photos of a single person for 9:16 paid ad creative (TikTok, Reels, Shorts). Covers two distinct formats — selfie / phone-camera POV (handheld, hook shot) and locked-off talking-head testimonial (single frame meant to look like a real creator on a tripod). Trigger when the user asks for \"UGC ad\", \"AI influencer photo\", \"creator selfie\", \"talking head ad frame\", \"ugc style\", \"fake iPhone photo of a person\", or is about to run `vsb run image/<slug>` for a person shot intended to look like real UGC. Pairs with the `nano-banana` skill for prompt craft and the `image` skill for picking a model.",
+      "name": "vsb-ugc-people",
+      "description": "Prompt AI image models to produce UGC-style photos of a single person for 9:16 paid ad creative (TikTok, Reels, Shorts). Covers two distinct formats — selfie / phone-camera POV (handheld, hook shot) and locked-off talking-head testimonial (single frame meant to look like a real creator on a tripod). Trigger when the user asks for \"UGC ad\", \"AI influencer photo\", \"creator selfie\", \"talking head ad frame\", \"ugc style\", \"fake iPhone photo of a person\", or is about to run `vsb run image/<slug>` for a person shot intended to look like real UGC. Pairs with the `vsb-nano-banana` skill for prompt craft and the `vsb-image` skill for picking a model.",
+      "renamed_from": "ugc-people",
       "files": [
         {
           "path": "references/model-notes.md",
-          "sha256": "ce0fb54697cc26482c6e32b644e5a478233141c73345e8ce8b53a30745d82894",
-          "bytes": 8984
+          "sha256": "9b9d00667412b07e7befef5c7bd7eb918bd9a915b7a55fcb4ff823b5e0947525",
+          "bytes": 8992
         },
         {
           "path": "references/selfie-pov.md",
-          "sha256": "77850f94de9c4be435ba6b48f2e9266860e8b8e08104702504d6ada29917c64c",
-          "bytes": 11551
+          "sha256": "6145ccae7e6eee7625739e4ef402b02ef938b9d5fcb4a35309d3fa98bc35c9b4",
+          "bytes": 11555
         },
         {
           "path": "references/talking-head.md",
@@ -99,35 +123,20 @@
         },
         {
           "path": "SKILL.md",
-          "sha256": "9fe71eddd76f26a8c4a1046a0bfb3e07124f4d1908740052b64ffc54f02ebfcc",
-          "bytes": 9750
+          "sha256": "14b48b8a749a3fc04b188aaff846ae6edb16221d23729f2bc137a9f2564c8988",
+          "bytes": 9787
         }
       ]
     },
     {
-      "name": "video",
+      "name": "vsb-video",
       "description": "Generate or edit video with Visual Sandbox. Trigger when the user wants text-to-video, image-to-video, or motion-control video via the vsb CLI. Always uses async + status polling — video runs take 30s–3min. Verify slugs with `vsb models --modality video --json`.",
+      "renamed_from": "video",
       "files": [
         {
           "path": "SKILL.md",
-          "sha256": "f429613ac8820fbc81e6f2190f8c2586bb4b78d3b72955b95189601bdcfdde78",
-          "bytes": 6145
-        }
-      ]
-    },
-    {
-      "name": "vsb",
-      "description": "Use the vsb CLI to generate AI media via Visual Sandbox — image, video, audio, 3D, vector. This is THE Visual Sandbox skill — its name is \"vsb\", not \"visual-sandbox\". Trigger when the user mentions \"Visual Sandbox\" in any form, \"vsb\", \"nano banana\", \"generate an image/video/audio\", \"run a model\", or asks to produce media via shell. Always pipe through --json when output will be parsed by an agent.",
-      "files": [
-        {
-          "path": "references/full-reference.md",
-          "sha256": "4d94c5fd417aef5c97deec41434b6ee9d54a328f0e3b585790bf9c6db7eb5e80",
-          "bytes": 12469
-        },
-        {
-          "path": "SKILL.md",
-          "sha256": "460f4a1dc749a57ac11b17df68ab2a7b337cfcb86756ce00c7518044c2d71a66",
-          "bytes": 16633
+          "sha256": "a3912a8ccc337976d9e47d9f641adbea08f11c17ddcd31fae8ba2ca191351555",
+          "bytes": 6177
         }
       ]
     }

@@ -89,4 +89,4 @@ Tell the user the cost before running. Skip this step if the user has no balance
 
 ## After install
 
-Read the `vsb` skill (now at `~/.claude/skills/vsb/SKILL.md`) before running any model. It covers the critical rules: `--json` for agents, slug discovery via `vsb models`, schema inspection before `vsb run`, sync vs async, sandbox auto-attach, selection-aware prompts. Also see `image`, `video`, `audio`, `presets`, and the prompt-craft trunks.
+Read the `vsb` skill (now at `~/.claude/skills/vsb/SKILL.md`) before running any model. It covers the critical rules: `--json` for agents, slug discovery via `vsb models`, schema inspection before `vsb run`, sync vs async, sandbox auto-attach, selection-aware prompts. Also see `vsb-image`, `vsb-video`, `vsb-audio`, `vsb-presets`, and the prompt-craft trunks.

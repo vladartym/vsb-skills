@@ -1,5 +1,6 @@
 ---
-name: audio
+name: vsb-audio
+renamed_from: audio
 description: >
   Generate sound effects (and, in v0.2, speech + music) via Visual Sandbox.
   Trigger when the user wants short SFX, ambient audio, or voice generation

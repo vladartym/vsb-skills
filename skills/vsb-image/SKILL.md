@@ -1,5 +1,6 @@
 ---
-name: image
+name: vsb-image
+renamed_from: image
 description: >
   Pick the right Visual Sandbox model for any image task and prompt it well.
   Trigger when the user wants to generate, edit, restyle, upscale, or remove
@@ -17,14 +18,14 @@ otherwise hand back the share page `https://visualsandbox.com/share/<job_id>/`,
 never a raw CDN URL ([vsb critical rule 5](../vsb/SKILL.md#critical-rules-read-first)).
 
 > **Before writing any image prompt, read
-> [`image-prompting`](../image-prompting/SKILL.md).** It covers the universal
+> [`vsb-image-prompting`](../vsb-image-prompting/SKILL.md).** It covers the universal
 > rules, the prompt-anatomy slot list, the reference-image keep/ignore
 > pattern (what to take from an attached image and what to ignore — without
 > this, watermarks and text overlays leak into outputs), and the camera /
 > lens / lighting / grade vocabulary banks. This skill only covers
 > *picking* a model — the prompt-craft itself lives in `image-prompting`,
-> with model-specific quirks in [`nano-banana`](../nano-banana/SKILL.md) and
-> [`ugc-people`](../ugc-people/SKILL.md).
+> with model-specific quirks in [`vsb-nano-banana`](../vsb-nano-banana/SKILL.md) and
+> [`vsb-ugc-people`](../vsb-ugc-people/SKILL.md).
 
 ## Picking a model
 
@@ -73,7 +74,7 @@ vsb run image/nano-banana \
 
 Naming each reference (`Image A`, `Image B`) and giving it a role
 (`IDENTITY source`, `BACKGROUND source`) is the universal multi-ref rule —
-see [`image-prompting`](../image-prompting/SKILL.md) §Multi-reference for
+see [`vsb-image-prompting`](../vsb-image-prompting/SKILL.md) §Multi-reference for
 the full template.
 
 Pass JSON-array inputs as a literal — `parseValue` auto-coerces. The exact

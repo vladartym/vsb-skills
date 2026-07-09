@@ -6,7 +6,7 @@ of a TikTok / Reels / Shorts ad, or as a static feed-ad creative pretending
 to be UGC.
 
 If the user wants a posed studio shot or a polished product photo, this is
-the wrong format. Use the broader `image` skill instead.
+the wrong format. Use the broader `vsb-image` skill instead.
 
 ## Camera rules
 

@@ -270,7 +270,7 @@ Allowed types: `image/*`, `video/*`, `audio/*`, `model/gltf*`. Anything else →
 
 ## `vsb presets`
 
-Five subcommands. See the `presets` skill for the deep dive.
+Five subcommands. See the `vsb-presets` skill for the deep dive.
 
 | Command | Purpose |
 |---------|---------|
@@ -336,7 +336,7 @@ Auto-update is **on by default** and needs no action:
 
 ## `vsb init`
 
-One-shot install of the default skill bundle (`vsb`, `presets`, `image`, `video`, `audio`) into the current project. Equivalent to running `vsb skills install` for each.
+One-shot install of the default skill bundle (`vsb`, `vsb-presets`, `vsb-image`, `vsb-image-prompting`, `vsb-video`, `vsb-p-video`, `vsb-audio`) into the current project. Equivalent to running `vsb skills install` for each.
 
 | Flag | Description |
 |------|-------------|

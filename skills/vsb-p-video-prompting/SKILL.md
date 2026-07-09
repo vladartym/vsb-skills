@@ -1,5 +1,6 @@
 ---
-name: p-video-prompting
+name: vsb-p-video-prompting
+renamed_from: p-video-prompting
 description: >
   Canonical prompt-craft skill for Pruna AI's P-Video (`video/p-video`) in
   Visual Sandbox. Read before writing any `vsb run video/p-video` prompt —
@@ -7,15 +8,15 @@ description: >
   Pruna slot formula (Subject / Action / Scene / Camera / Lighting / Style /
   Audio), the image-to-video narration pattern for talking avatars, the
   DO/DON'T list straight from Pruna's docs, and the `prompt_upsampling`
-  override rule. Pairs with [`p-video`](../p-video/SKILL.md) for runtime
+  override rule. Pairs with [`vsb-p-video`](../vsb-p-video/SKILL.md) for runtime
   (draft toggle, pricing, schema, async + poll).
 ---
 
 # P-Video prompting
 
 Prompt craft only. For runtime, pricing, draft toggle, async + poll, read
-[`p-video`](../p-video/SKILL.md) first. For universal video knobs (aspect,
-duration, fps), read [`video`](../video/SKILL.md).
+[`vsb-p-video`](../vsb-p-video/SKILL.md) first. For universal video knobs (aspect,
+duration, fps), read [`vsb-video`](../vsb-video/SKILL.md).
 
 ## Universal rules
 
@@ -134,9 +135,9 @@ A 5s 720p draft = $0.025. Standard = $0.10. Affording 10–15 draft variations c
 
 ## Cross-links
 
-- Runtime, draft toggle, pricing, schema → [`p-video`](../p-video/SKILL.md)
-- Universal video patterns (async + poll, aspect-ratio cropping) → [`video`](../video/SKILL.md)
-- For text-only video (no audio), other models may fit better — model picker is in [`video`](../video/SKILL.md)
+- Runtime, draft toggle, pricing, schema → [`vsb-p-video`](../vsb-p-video/SKILL.md)
+- Universal video patterns (async + poll, aspect-ratio cropping) → [`vsb-video`](../vsb-video/SKILL.md)
+- For text-only video (no audio), other models may fit better — model picker is in [`vsb-video`](../vsb-video/SKILL.md)
 
 ## Pre-flight checklist
 

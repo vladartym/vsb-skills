@@ -9,13 +9,13 @@ Each skill is a single `SKILL.md` (plus optional `references/`) with YAML frontm
 | Skill | Purpose |
 |-------|---------|
 | [`vsb`](skills/vsb/) | Top-level guide to the `vsb` CLI — auth, run, status, presets, agent rules |
-| [`image`](skills/image/) | Pick the right image model and prompt it well |
-| [`video`](skills/video/) | Generate / edit video — async + status polling |
-| [`audio`](skills/audio/) | Generate sound effects, ambient audio, speech |
-| [`presets`](skills/presets/) | Run, save, override, and share reproducible model configurations |
-| [`nano-banana`](skills/nano-banana/) | Prompt the Nano Banana family well — edit-mode rules, text rendering, multi-reference blending |
-| [`image-prompting`](skills/image-prompting/) | Canonical prompt-craft trunk for every image model — anatomy, reference keep/ignore rules |
-| [`ugc-people`](skills/ugc-people/) | UGC-style single-person ad photos — selfie POV + talking-head formats for 9:16 TikTok/Reels |
+| [`vsb-image`](skills/vsb-image/) | Pick the right image model and prompt it well |
+| [`vsb-video`](skills/vsb-video/) | Generate / edit video — async + status polling |
+| [`vsb-audio`](skills/vsb-audio/) | Generate sound effects, ambient audio, speech |
+| [`vsb-presets`](skills/vsb-presets/) | Run, save, override, and share reproducible model configurations |
+| [`vsb-nano-banana`](skills/vsb-nano-banana/) | Prompt the Nano Banana family well — edit-mode rules, text rendering, multi-reference blending |
+| [`vsb-image-prompting`](skills/vsb-image-prompting/) | Canonical prompt-craft trunk for every image model — anatomy, reference keep/ignore rules |
+| [`vsb-ugc-people`](skills/vsb-ugc-people/) | UGC-style single-person ad photos — selfie POV + talking-head formats for 9:16 TikTok/Reels |
 
 ## Install
 
@@ -25,7 +25,7 @@ curl -fsSL https://visualsandbox.com/install.sh | sh
 vsb setup
 ```
 
-`vsb setup` writes the default bundle (`vsb`, `presets`, `image`, `image-prompting`, `video`, `audio`) into `~/.claude/skills/` so Claude Code finds them in every project. Pass `--project` to install into `./.claude/skills/` instead (committable, per-project, shared via git).
+`vsb setup` writes the default bundle (`vsb`, `vsb-presets`, `vsb-image`, `vsb-image-prompting`, `vsb-video`, `vsb-audio`) into `~/.claude/skills/` so Claude Code finds them in every project. Pass `--project` to install into `./.claude/skills/` instead (committable, per-project, shared via git).
 
 ```bash
 # Skills only — skip auth (re-run after editing locally)

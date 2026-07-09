@@ -31,6 +31,8 @@ interface FileEntry {
 interface SkillEntry {
   name: string;
   description: string;
+  /** Previous name of this skill — lets the CLI's sync migrate old installs in place. */
+  renamed_from?: string;
   files: FileEntry[];
 }
 
@@ -43,7 +45,11 @@ function sha256(content: string): string {
  * folded `description: >` form (the SKILL.md template uses both). Anything
  * fancier (lists, nested maps) is out of scope — keep it tight.
  */
-function parseFrontmatter(md: string): { name: string; description: string } {
+function parseFrontmatter(md: string): {
+  name: string;
+  description: string;
+  renamed_from?: string;
+} {
   const m = md.match(/^---\n([\s\S]*?)\n---/);
   if (!m) throw new Error("No frontmatter");
   const obj: Record<string, string> = {};
@@ -62,7 +68,11 @@ function parseFrontmatter(md: string): { name: string; description: string } {
   if (!obj.name || !obj.description) {
     throw new Error(`Frontmatter missing name/description: ${JSON.stringify(obj)}`);
   }
-  return { name: obj.name, description: obj.description };
+  return {
+    name: obj.name,
+    description: obj.description,
+    ...(obj.renamed_from ? { renamed_from: obj.renamed_from } : {}),
+  };
 }
 
 function walkSkill(skillDir: string): FileEntry[] {
@@ -93,7 +103,17 @@ for (const entry of readdirSync(SKILLS_DIR)) {
   const skillMd = join(dir, "SKILL.md");
   if (!existsSync(skillMd)) continue;
   const fm = parseFrontmatter(readFileSync(skillMd, "utf-8"));
-  skills.push({ name: fm.name, description: fm.description, files: walkSkill(dir) });
+  if (fm.name !== entry) {
+    // Remote fetches build URLs from the skill name; the embedded bundle keys
+    // files by directory. Both break silently when the two disagree.
+    throw new Error(`Skill dir "${entry}" != frontmatter name "${fm.name}" — rename one.`);
+  }
+  skills.push({
+    name: fm.name,
+    description: fm.description,
+    ...(fm.renamed_from ? { renamed_from: fm.renamed_from } : {}),
+    files: walkSkill(dir),
+  });
 }
 
 skills.sort((a, b) => a.name.localeCompare(b.name));

@@ -1,12 +1,13 @@
 ---
-name: p-video
+name: vsb-p-video
+renamed_from: p-video
 description: >
   Prompt and run Pruna AI's P-Video (`video/p-video`) well — the cheapest
   video model in Visual Sandbox, with a built-in `draft` toggle that drops
   cost ~4×. Trigger whenever the user is about to call `vsb run video/p-video`
   or asks "cheapest video model", "draft video", "iterate fast", or "lots of
   video variations". Always ask the user **draft or standard** before running.
-  Pairs with the parent [`video`](../video/SKILL.md) skill for the async +
+  Pairs with the parent [`vsb-video`](../vsb-video/SKILL.md) skill for the async +
   poll pattern.
 ---
 
@@ -15,11 +16,11 @@ description: >
 Cheapest video model in the catalog. Fast iteration. Two-mode runtime via the
 `draft` boolean — flip it on for previews, off when you're locking the shot.
 
-Read the parent [`video`](../video/SKILL.md) skill first for the universal
+Read the parent [`vsb-video`](../vsb-video/SKILL.md) skill first for the universal
 async + poll + cancel pattern. This skill only adds p-video–specific behavior.
 
 Prompt craft — slot formula, narration pattern, DO/DON'T — lives in the
-sibling [`p-video-prompting`](../p-video-prompting/SKILL.md) skill. Load it
+sibling [`vsb-p-video-prompting`](../vsb-p-video-prompting/SKILL.md) skill. Load it
 before writing any prompt.
 
 Verify the live schema before assuming fields:
@@ -77,7 +78,7 @@ Other knobs:
 
 - `aspect_ratio`: `16:9, 9:16, 4:3, 3:4, 3:2, 2:3, 1:1` (default `16:9`).
   Match the source image when seeding — most video models silently crop
-  mismatched aspects (see parent [`video`](../video/SKILL.md) skill).
+  mismatched aspects (see parent [`vsb-video`](../vsb-video/SKILL.md) skill).
 - `resolution`: `720p | 1080p` (default `720p`).
 - `fps`: `24 | 48` (default `24`). Bump to 48 only for high-motion shots
   that need slow-mo or smooth pans — 24fps is the default cinematic feel.
@@ -106,7 +107,7 @@ aesthetic.
 ## Worked examples
 
 All examples use `--async` + status poll — video runs take 30s–3min. See
-[`video`](../video/SKILL.md) for the polling helper.
+[`vsb-video`](../vsb-video/SKILL.md) for the polling helper.
 
 ### Text-to-video, draft (iteration)
 

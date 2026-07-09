@@ -1,5 +1,6 @@
 ---
-name: ugc-people
+name: vsb-ugc-people
+renamed_from: ugc-people
 description: >
   Prompt AI image models to produce UGC-style photos of a single person for
   9:16 paid ad creative (TikTok, Reels, Shorts). Covers two distinct formats —
@@ -8,8 +9,8 @@ description: >
   Trigger when the user asks for "UGC ad", "AI influencer photo", "creator
   selfie", "talking head ad frame", "ugc style", "fake iPhone photo of a
   person", or is about to run `vsb run image/<slug>` for a person shot
-  intended to look like real UGC. Pairs with the `nano-banana` skill for
-  prompt craft and the `image` skill for picking a model.
+  intended to look like real UGC. Pairs with the `vsb-nano-banana` skill for
+  prompt craft and the `vsb-image` skill for picking a model.
 ---
 
 # UGC people for 9:16 ad creative

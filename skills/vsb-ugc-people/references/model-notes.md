@@ -145,13 +145,13 @@ the current UX target for "UGC people" workflows.
 - Higgsfield is the **preset-driven UX** competitor. Operators (per
   @HeyAbhishek, @_zegalone, @Shabbir3320) don't write prompts — they pick
   a preset, upload a base image, click generate. That is the UX target
-  Visual Sandbox is building toward (see the `presets` skill).
+  Visual Sandbox is building toward (see the `vsb-presets` skill).
 - Its image quality for people is at parity with or above Nano Banana Pro
   for the UGC use case specifically — it's purpose-built for "hyper-real
   humans, expressive faces, consistent character identity."
 
 **How to use this in vsb.**
-- Don't try to reproduce Higgsfield directly. Use the `presets` skill to
+- Don't try to reproduce Higgsfield directly. Use the `vsb-presets` skill to
   save proven UGC prompts as reusable presets (e.g. `ugc-selfie-pov`,
   `ugc-talking-head`), each pre-configured with the right model,
   aspect ratio, and slot template.
