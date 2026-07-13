@@ -30,6 +30,17 @@
       ]
     },
     {
+      "name": "vsb-download",
+      "description": "Download a video from TikTok, Instagram, YouTube (any yt-dlp-supported site) via `vsb download`, then actually understand it — extract frame grids with ffmpeg, read them as images, and reconstruct the dialogue from burned-in captions. Trigger when the user shares a video URL and asks \"what is this video about\", \"watch this\", \"summarize this video\", \"download this tiktok/reel/short\", or wants a local copy of a social video. Metadata-only lookups use `--info` (no download, no bytes).",
+      "files": [
+        {
+          "path": "SKILL.md",
+          "sha256": "dc30cdda5ecc6c8485a6119171fd161ac54be6b534aa0c39a907f2712e5a05e8",
+          "bytes": 5612
+        }
+      ]
+    },
+    {
       "name": "vsb-image",
       "description": "Pick the right Visual Sandbox model for any image task and prompt it well. Trigger when the user wants to generate, edit, restyle, upscale, or remove the background from images via the vsb CLI. All execution goes through `vsb run image/<slug>` — sync, ~5–10s for the standard models. Always verify slugs with `vsb models --modality image --json` first.",
       "renamed_from": "image",
