@@ -113,6 +113,17 @@
       ]
     },
     {
+      "name": "vsb-subtitles",
+      "description": "Add TikTok/CapCut-style word-by-word captions to any video with `vsb subtitles` — transcribes via Visual Sandbox's `audio/scribe` (ElevenLabs Scribe, word-level timestamps), builds kinetic .ass subtitles (ALL-CAPS bold, per-word pop-in, clause-by-clause reveal), and burns them in with local ffmpeg. Trigger when the user says \"add subtitles\", \"add captions\", \"caption this video\", \"burn subs\", or wants a transcript of a video with timestamps. Accepts a local file or a TikTok/Instagram/YouTube URL.",
+      "files": [
+        {
+          "path": "SKILL.md",
+          "sha256": "3bc5487caa351af8c949d5bc37ec56fcfed4c5527bb9bb5debe9b4599bf0013b",
+          "bytes": 3316
+        }
+      ]
+    },
+    {
       "name": "vsb-ugc-people",
       "description": "Prompt AI image models to produce UGC-style photos of a single person for 9:16 paid ad creative (TikTok, Reels, Shorts). Covers two distinct formats — selfie / phone-camera POV (handheld, hook shot) and locked-off talking-head testimonial (single frame meant to look like a real creator on a tripod). Trigger when the user asks for \"UGC ad\", \"AI influencer photo\", \"creator selfie\", \"talking head ad frame\", \"ugc style\", \"fake iPhone photo of a person\", or is about to run `vsb run image/<slug>` for a person shot intended to look like real UGC. Pairs with the `vsb-nano-banana` skill for prompt craft and the `vsb-image` skill for picking a model.",
       "renamed_from": "ugc-people",
