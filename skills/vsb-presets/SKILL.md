@@ -130,9 +130,52 @@ vsb presets create --from ./my-preset.json --json
 ```
 
 `surface` is `imagine` for image presets, `video` for video presets (`flow`
-presets also carry `steps` + `user_fields` — superadmin builder feature). The
-backend resolves the actual `<category>/<slug>` for `vsb run` via the
-registry — you only need to specify `surface + model_slug` here.
+presets also carry `steps` + `user_fields` — superadmin builder feature; see
+below). The backend resolves the actual `<category>/<slug>` for `vsb run` via
+the registry — you only need to specify `surface + model_slug` here.
+
+## Flow presets (surface=flow)
+
+Multi-step chains run client-side on `/p/<uuid>/`. `steps` is an ordered list
+(step N's output feeds step N+1's image slot); `model_slug` at the top level
+mirrors step 1's slug. Step shape:
+
+```json
+{
+  "model_slug": "seedance-2",
+  "category": "video",
+  "prompt": "@motion",
+  "image_source": "ask_user",
+  "image_label": "Your drone shot",
+  "settings": { "resolution": "__user__", "duration": 5 }
+}
+```
+
+- `image_source`: `none | ask_user | upload | previous_step`. `ask_user` =
+  the runner uploads their own image (first step only; later steps must be
+  `previous_step`). A video model CAN be step 1 — the user's image becomes
+  the first frame (image-to-video).
+- `settings` hold **raw** schema values (not display strings). The
+  `"__user__"` sentinel exposes that setting as a picker on the run page;
+  when the user doesn't touch it, the model's schema default applies.
+- `user_fields` are the @token inputs referenced in prompts:
+
+```json
+{ "name": "@motion", "kind": "text", "label": "Motion prompt",
+  "required": true, "default": "Cinematic aerial flythrough…" }
+```
+
+- `required` optional; absent = required.
+- `default` (text fields only) **prefills the run-page input — the user can
+  edit or replace it**. This is how a preset ships a prefilled-but-editable
+  prompt: make the step's whole `prompt` just `"@motion"` and put the full
+  author text in the field's `default`. Defaults longer than ~60 chars render
+  as a textarea on the run page.
+- Image fields (`"kind": "image"`) render an upload square; their URL rides
+  the model's reference-image slot, not the prompt.
+
+Trap: ByteDance seedance's safety filter (E005) flags "drone"/"FPV" wording
+in prompts — write "aerial flythrough" instead.
 
 ## Update in place (keeps the uuid + share URL)
 
