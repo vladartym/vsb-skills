@@ -268,6 +268,27 @@ Allowed types: `image/*`, `video/*`, `audio/*`, `model/gltf*`. Anything else →
 
 ---
 
+## `vsb download <url>`
+
+Download a video from TikTok, Instagram, YouTube — any yt-dlp-supported
+site — to a local file. Wraps a pinned, SHA-256-verified `yt-dlp`
+bootstrapped to `~/.vsb/tools/` on first use. No auth required. See the
+`vsb-download` skill for the full understand-the-video pipeline (frame
+grids, caption reading).
+
+| Flag | Purpose |
+|------|---------|
+| `-o, --output <path>` | Output path. Trailing `/` = directory; otherwise a yt-dlp filename template. Default: `<title> [<id>].<ext>` in cwd |
+| `--info` | Print metadata JSON only — nothing downloaded |
+| `--cookies <browser>` | Read cookies from a local browser profile (`chrome`, `safari`, `firefox`). Needed for Instagram and other login-walled posts; may prompt for keychain access on macOS |
+
+`--info` returns `{id, title, description, uploader, duration_seconds,
+width, height, source, url, upload_date (YYYYMMDD), view_count,
+like_count}`. A download returns the same plus `"status": "downloaded"`
+and `file` (resolved local path).
+
+---
+
 ## `vsb presets`
 
 Five subcommands. See the `vsb-presets` skill for the deep dive.

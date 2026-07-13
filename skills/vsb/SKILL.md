@@ -56,6 +56,7 @@ A running job must never hold the agent's turn hostage. Start it, note the id, k
 | `vsb status <job_id>` | Poll a job (`--result`, `--cancel`, `--download [template]`) |
 | `vsb jobs` | List recent jobs, newest first (`--pending`, `--status`, `--limit N`) — pending rows carry `eta_seconds` + `elapsed_seconds` |
 | `vsb upload <path-or-url>` | Upload local file or remote URL to VS CDN |
+| `vsb download <url>` | Download a TikTok/IG/YouTube video to a local file (`--info` = metadata only, `--cookies <browser>` for login-walled) — see the `vsb-download` skill |
 | `vsb presets <list|get|run|create|delete>` | Manage saved model+inputs presets |
 | `vsb sandbox selection` | Read what the user has selected on the canvas (prompt, model, image URL) |
 | `vsb sandbox nodes` | List every node on the active sandbox (slim by default, `--full` for raw, `--limit N` to cap, `--kind generation\|upload` to filter) |
