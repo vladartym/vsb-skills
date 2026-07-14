@@ -35,6 +35,22 @@ vsb subtitles ./clip.mp4 --no-uppercase --json  # keep original casing
 - `--language` takes an ISO-639-1 code; omit to auto-detect.
 - Always `--json` when an agent reads the output.
 
+## Fix mishears, re-burn free
+
+`--transcript <file>` reuses a saved transcript instead of transcribing —
+no API call, no cost. The workflow for correcting ASR mistakes (brand
+names, homophones like "paid"/"pay"):
+
+```bash
+vsb subtitles ./clip.mp4 --json                          # first pass, pays ~1¢
+# edit clip-subtitled.transcript.json: fix the "text" of wrong words,
+# delete hallucinated ones — KEEP the start/end timestamps
+vsb subtitles ./clip.mp4 --transcript ./fixed.json --json  # re-burn, free
+```
+
+Same flag also covers restyling passes (`--font-size`, `--no-uppercase`)
+without paying twice.
+
 ## Cost
 
 Transcription is billed per hour of audio (`audio/scribe`), so a typical
