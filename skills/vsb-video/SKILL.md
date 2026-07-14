@@ -131,6 +131,20 @@ vsb status "$JOB" --cancel --json
 
 Returns 1 if the job already finished. Clean exit code = clean cancel.
 
+## Dialogue text rules (any model that speaks)
+
+Applies to every prompt that contains spoken lines — Veo dialogue, P-Video
+narration, Kling Avatar scripts, and any future speech model.
+
+- **Never put an em dash (—) or en dash (–) in dialogue text.** Speech
+  synthesis vocalizes dashes unpredictably — a dramatic pause at best,
+  hallucinated words at worst (a real run turned `"Visual Sandbox —"` into
+  audio that transcribes back as "Visual Sandbox 1008"). Use a comma, a
+  period, or an ellipsis `...` for the same beat.
+- Punctuation the models handle reliably: `, . ? ! ...`
+- Keep the rule for the *dialogue string only* — dashes in the visual
+  description parts of the prompt are fine.
+
 ## Common gotchas
 
 - **Status can stay at `queued` for 30+ seconds** before flipping to `in_progress`. That's the provider queue, not your CLI hanging.

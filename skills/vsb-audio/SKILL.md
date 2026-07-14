@@ -82,3 +82,7 @@ typical rate is fractions of a cent.
 - **TTS / music models are not yet exposed in v0.1.** Don't promise the user
   speech generation through `vsb` until they show up in
   `vsb models --modality audio --json`.
+- **No em/en dashes (— –) in any text a model will speak.** Speech synthesis
+  vocalizes dashes unpredictably (odd pauses, hallucinated words). Use a
+  comma, period, or `...` — full rule in the dialogue section of
+  [`vsb-video`](../vsb-video/SKILL.md).

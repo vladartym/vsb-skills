@@ -86,7 +86,10 @@ Pattern parts:
 - **Explicit motion** — "moves naturally", "looks at camera", "points to the screen". Don't assume the model fills idle frames; tell it.
 - **Optional camera move** — "camera pans left to right", "slow push-in".
 - **Voice descriptor** (optional) — "heavy deep male voice", "soft feminine voice", "kid's voice". Drives audio synthesis tone.
-- **Quoted dialogue** — exact double-quoted string. Drives lip-sync.
+- **Quoted dialogue** — exact double-quoted string. Drives lip-sync. Never
+  use em/en dashes (— –) inside it: speech synthesis vocalizes them as odd
+  pauses or hallucinated words. Use a comma, period, or `...` instead (see
+  the dialogue text rules in [`vsb-video`](../vsb-video/SKILL.md)).
 
 ## Audio block — three modes
 
@@ -149,5 +152,6 @@ Before `vsb run video/p-video`:
 4. For talking avatar: image attached + `aspect_ratio` matches image + quoted dialogue + voice descriptor?
 5. `draft: true` for first 3+ runs?
 6. `prompt_upsampling: false` if the dialogue must stay verbatim?
+7. No em/en dashes inside the quoted dialogue? (Speech synthesis mangles them.)
 
 All ✓ → run. Any ✗ → not ready.
