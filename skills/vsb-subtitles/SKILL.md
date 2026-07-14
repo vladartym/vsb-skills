@@ -23,6 +23,7 @@ only paid step).
 ```bash
 vsb subtitles ./clip.mp4 --json                 # local file → ./clip-subtitled.mp4
 vsb subtitles "https://www.tiktok.com/@user/video/123" --json
+vsb subtitles ./clip.mp4 --preset beast --json  # MrBeast-style captions
 vsb subtitles ./clip.mp4 -o ./out.mp4 --language en --json
 vsb subtitles ./clip.mp4 --font "Montserrat ExtraBold" --font-size 42 --json
 vsb subtitles ./clip.mp4 --no-uppercase --json  # keep original casing
@@ -57,17 +58,30 @@ Transcription is billed per hour of audio (`audio/scribe`), so a typical
 short-form clip costs about a cent. `vsb pricing audio/scribe` shows the
 current rate; the JSON output reports the exact `cost` charged.
 
-## Caption style
+## Caption style — presets
 
-Modeled on TikTok auto-captions: ALL-CAPS bold sans, white with a soft dark
-shadow, centered in the lower third. Words appear one at a time synced to
-speech — each new word pops in slightly oversized and translucent, then
-settles (~120ms). Words accumulate until the clause ends (punctuation, a
-speech pause > 0.8s, or the two-line budget), then the block clears and the
-next clause starts.
+`--preset` picks the whole look (default `classic`):
 
-`--font` must name an installed font; libass silently falls back to a
-default sans when it's missing, so captions never fail on fonts.
+- `classic` — TikTok auto-caption look: ALL-CAPS bold sans, white with a
+  soft dark shadow, lower third. Words fade in one at a time synced to
+  speech and accumulate until the clause ends (punctuation, a speech
+  pause > 0.8s, or the two-line budget), then the block clears.
+- `beast` — MrBeast style: Komika Axis, short 2–3 word chunks that pop in
+  with a scale-overshoot bounce, fat black outline, heavy bottom-right
+  shadow, centered mid-screen.
+- `highlight` — full phrase visible at once, the word being spoken is
+  recolored yellow (Montserrat Black, thick black outline).
+- `hormozi` — full phrase visible, the active word cycles
+  green → yellow → red (Anton, condensed caps).
+
+`--font` / `--font-size` override the preset's defaults. Fonts load from
+the system or from `~/.vsb/fonts` (drop .ttf files there — no install
+needed); libass silently falls back to a default sans when a font is
+missing, so captions never fail on fonts. `beast` needs Komika Axis in
+`~/.vsb/fonts` for the authentic look.
+
+Cheap preset comparison: burn each preset once with `--transcript` reuse —
+one paid transcription, N free re-burns.
 
 ## Transcribe without burning
 
